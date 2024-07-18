@@ -11,6 +11,8 @@ use App\Http\Controllers\Web\AboutController;
 use App\Http\Controllers\Web\WebBlogController;
 use App\Http\Controllers\Web\WebBookingController;
 use App\Http\Controllers\Web\WebContactController;
+use App\Http\Controllers\Web\DriverManageController;
+use App\Http\Controllers\AdminRegistrationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +29,8 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/blogs', [WebBlogController::class, 'index'])->name('blogs');
 Route::get('/contacts', [WebContactController::class, 'index'])->name('contacts');
+Route::get('/driver', [DriverManageController::class, 'index'])->name('driver');
+Route::post('/send-registration', [DriverManageController::class, 'sendRegistration'])->name('send-registration');
 Route::post('/contact-mail', [ContactController::class, 'sendMail'])->name('send-mail');
 Route::get('/blog-detail/{blog}', [WebBlogController::class, 'blogDetailPage'])->name('blog-detail');
 Route::get('/bookings', [WebBookingController::class, 'index'])->name('bookings');
@@ -76,5 +80,10 @@ Route::group(['middleware' => ['auth:admin']], function () {
     Route::group(['prefix' => 'contact', 'namespace' => 'Contact', 'as' => 'contact.'], function () {
         Route::get('/', [ContactController::class, 'index'])->name('index');
         Route::delete('/delete/{contact}', [ContactController::class, 'delete'])->name('delete');
+    });
+
+    Route::group(['prefix' => 'register', 'namespace' => 'Register', 'as' => 'register.'], function () {
+        Route::get('/', [AdminRegistrationController::class, 'index'])->name('index');
+        Route::delete('/delete/{registration}', [AdminRegistrationController::class, 'delete'])->name('delete');
     });
 });
