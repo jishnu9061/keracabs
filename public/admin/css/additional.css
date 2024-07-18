@@ -1,0 +1,152 @@
+* {
+  font-family: "Roboto", sans-serif;
+}
+input {
+  padding: 8px;
+}
+.bg-primary {
+  --bs-bg-opacity: 1;
+  background-color: rgb(36 36 38) !important;
+}
+.btn-primary {
+  --bs-btn-bg: #5b54a4 !important;
+  --bs-btn-border-color: #5b54a4 !important;
+}
+.btn:hover {
+  background-color: #5b54a4 !important;
+  --bs-btn-border-color: #5b54a4 !important;
+}
+.active > .page-link,
+.page-link.active {
+  background-color: #5b54a4 !important;
+  border-color: #5b54a4 !important;
+}
+.dashicon {
+  text-align: center;
+}
+.dashicon i {
+  font-size: 45px;
+  color: #eeeeee;
+}
+.cardColora {
+  background: linear-gradient(45deg, #66bb6a, #2e7d32);
+  border-radius: 6px;
+}
+.cardColorb {
+  background: linear-gradient(45deg, #e57373, #c62828);
+  border-radius: 6px;
+}
+.cardColorc {
+  background: linear-gradient(45deg, #ba68c8, #6a1b9a);
+  border-radius: 6px;
+}
+.cardColord {
+  background: linear-gradient(45deg, #ffcc80, #ef6c00);
+  border-radius: 6px;
+}
+.form-control {
+  color: #424242 !important;
+  background-color: #f8f9fa03 !important;
+}
+
+textarea.form-control {
+  width: 100%;
+}
+
+.high {
+  background-color: red;
+}
+.med {
+  background-color: rgb(245, 168, 54);
+}
+.low {
+  background-color: rgb(3, 95, 29);
+}
+.modal-header {
+  background-color: #73b743;
+}
+.modal-header h5 {
+  color: #fff;
+}
+.modal-header button {
+  color: #fff;
+}
+a.underline {
+  text-decoration: underline !important;
+  text-underline-position: from-font;
+}
+.repeater {
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #c0c0c0;
+  margin-bottom: 1rem;
+}
+
+.repeatable {
+  margin-bottom: 1rem;
+  -webkit-border-radius: 0.25rem;
+  -moz-border-radius: 0.25rem;
+  border-radius: 0.25rem;
+}
+
+.remove {
+  display: block;
+  float: right;
+}
+
+.half-holder {
+  width: 100%;
+  padding-bottom: 0.5rem;
+}
+
+label {
+  display: block;
+}
+
+.half {
+  float: left;
+  width: 90%;
+  margin-right: 0%;
+}
+
+.half:nth-child(even) {
+  margin-right: 0;
+}
+
+input[type="text"],
+input[type="tel"],
+input[type="email"],
+textarea {
+  margin: 0;
+  padding: 0.50rem;
+  width: 100%;
+}
+
+input[type="submit"],
+input[type="button"] {
+  padding: 0.5rem;
+}
+
+input[type="submit"] {
+  width: auto;
+}
+
+input[type="radio"] {
+  width: auto;
+  margin-right: 0.5rem;
+}
+
+textarea {
+  resize: vertical;
+  overflow-y: scroll;
+}
+
+.add_btn {
+  display: block;
+  width: 50%;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.ht {
+  height: 470px;
+}
