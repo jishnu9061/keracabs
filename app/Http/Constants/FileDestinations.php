@@ -10,4 +10,8 @@ class FileDestinations
     const BANNER_IMAGE = 'banner/image/';
 
     const PAGE = 10;
+
+    const VEHICLE_PHOTO = 'vehicle/photo/';
+
+    const DRIVER_IMAGE = 'driver/photo/';
 }

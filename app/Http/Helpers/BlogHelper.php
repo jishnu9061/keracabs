@@ -41,4 +41,27 @@ class BlogHelper
         }
         return $file;
     }
+
+    public static function getVehicleImagePath($imageName)
+    {
+        $file = asset('images/blog.jpg');
+        if (null != $imageName) {
+            if (FileManager::checkFileExist($imageName, FileDestinations::VEHICLE_PHOTO)) {
+                $file = FileManager::getFileUrl($imageName, FileDestinations::VEHICLE_PHOTO);
+            }
+        }
+        return $file;
+    }
+
+    public static function getDriverImagePath($imageName)
+    {
+        $file = asset('images/blog.jpg');
+        if (null != $imageName) {
+            if (FileManager::checkFileExist($imageName, FileDestinations::DRIVER_IMAGE)) {
+                $file = FileManager::getFileUrl($imageName, FileDestinations::DRIVER_IMAGE);
+            }
+        }
+        return $file;
+    }
+
 }

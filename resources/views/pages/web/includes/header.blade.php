@@ -98,6 +98,9 @@
                                         <a href="{{ route('bookings') }}">Booking</a>
                                     </li>
                                     <li>
+                                        <a href="{{ route('driver') }}">Drivers Registraion</a>
+                                    </li>
+                                    <li>
                                         <a href="{{ route('blogs') }}">Blog</a>
                                     </li>
 

@@ -19,6 +19,12 @@
             </a>
           </li>
           <li>
+            <a href="{{ route('register.index') }}">
+              <i class="bx bx-user"></i>
+              <span data-key="t-dashboard">Registration</span>
+            </a>
+          </li>
+          <li>
             <a href="javascript: void(0);" class="has-arrow">
               <i class="bx bx-image"></i>
               <span data-key="t-components">Slider</span>
