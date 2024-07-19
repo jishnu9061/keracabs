@@ -11,70 +11,79 @@
 </div>
 <div class="position-relative space">
     <div class="container">
-        <form action="{{ route('send-registration') }}" method="POST" class="booking-form-area" id="bookingForm">
+        <form action="{{ route('send-registration') }}" method="POST" class="booking-form-area" id="bookingForm" enctype="multipart/form-data">
             @csrf
             <div class="booking-title-area">
                 <h4 class="booking-title">Registration</h4>
             </div>
             <div class="row">
                 <div class="form-group col-sm-6">
-                    <input type="text" class="form-control" name="name" id="name" placeholder="Your Name *" />
+                    <input type="text" class="form-control" name="name" id="name" placeholder="Your Name *" required />
                 </div>
 
                 <div class="form-group col-sm-6">
-                    <input type="number" class="form-control" name="number" id="number" placeholder="Phone Number *" />
+                    <input type="number" class="form-control" name="number" id="number" placeholder="Phone Number *" required />
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-sm-6">
-                    <input type="text" class="form-control" name="vehicle_type" id="vehicle_type" placeholder="Type of Vehicle *" />
+                    <input type="number" class="form-control" name="whatsapp_number" id="whatsapp" placeholder="WhatsApp Number *" required />
                 </div>
                 <div class="form-group col-sm-6">
-                    <input type="text" class="form-control" name="seating_capacity" id="seating_capacity" placeholder="Seating Capacity Including Driver *" />
+                    <input type="text" class="form-control" name="vehicle_type" id="vehicle_type" placeholder="Type of Vehicle *" required />
+                </div>
+                @error('vehicle_type')
+                <span class="text-danger">{{ $message }}</span>
+            @enderror
+                <div class="form-group col-sm-6">
+                    <input type="text" class="form-control" name="seating_capacity" id="seating_capacity" placeholder="Seating Capacity Including Driver *" required />
                 </div>
                 <div class="form-group col-sm-6">
-                    <input type="text" class="form-control" name="vehicle_number" id="vehicle_number" placeholder="Vehicle Number *" />
+                    <input type="text" class="form-control" name="vehicle_number" id="vehicle_number" placeholder="Vehicle Number *" required />
                 </div>
                 <div class="form-group col-sm-6">
-                    <input type="text" class="form-control" name="parking_location" id="parking_location" placeholder="Parking Location *" />
+                    <input type="text" class="form-control" name="parking_location" id="parking_location" placeholder="Parking Location *" required />
                 </div>
-            </div>
-            <div class="form-group">
-                <select class="form-control" name="district" id="district">
-                    <option value="">-- District *--</option>
-                    <option value="Alappuzha">Alappuzha</option>
-                    <option value="Ernakulam">Ernakulam</option>
-                    <option value="Idukki">Idukki</option>
-                    <option value="Kannur">Kannur</option>
-                    <option value="Kasaragod">Kasaragod</option>
-                    <option value="Kollam">Kollam</option>
-                    <option value="Kottayam">Kottayam</option>
-                    <option value="Kozhikode">Kozhikode</option>
-                    <option value="Malappuram">Malappuram</option>
-                    <option value="Palakkad">Palakkad</option>
-                    <option value="Pathanamthitta">Pathanamthitta</option>
-                    <option value="Thiruvananthapuram">Thiruvananthapuram</option>
-                    <option value="Thrissur">Thrissur</option>
-                    <option value="Wayanad">Wayanad</option>
-                </select>
+                <div class="form-group col-sm-6">
+                    <select class="form-control" name="district" id="district" required>
+                        <option value="">-- District * --</option>
+                        <option value="Alappuzha">Alappuzha</option>
+                        <option value="Ernakulam">Ernakulam</option>
+                        <option value="Idukki">Idukki</option>
+                        <option value="Kannur">Kannur</option>
+                        <option value="Kasaragod">Kasaragod</option>
+                        <option value="Kollam">Kollam</option>
+                        <option value="Kottayam">Kottayam</option>
+                        <option value="Kozhikode">Kozhikode</option>
+                        <option value="Malappuram">Malappuram</option>
+                        <option value="Palakkad">Palakkad</option>
+                        <option value="Pathanamthitta">Pathanamthitta</option>
+                        <option value="Thiruvananthapuram">Thiruvananthapuram</option>
+                        <option value="Thrissur">Thrissur</option>
+                        <option value="Wayanad">Wayanad</option>
+                    </select>
+                </div>
             </div>
             <br>
             <div class="row">
                 <div class="form-group col-sm-6">
-                    <label>Vehicle photo from Front side(*)</label>
-                    <input type="file" class="form-control" name="vehicle_photo">
+                    <label>Vehicle photo from Front side (*)</label>
+                    <input type="file" class="form-control" name="vehicle_photo" accept="image/*" required>
                 </div>
                 <div class="form-group col-sm-6">
-                    <label>Driver Image(*)</label>
-                    <input type="file" class="form-control" name="driver_image" id="driver_image" >
+                    <label>Driver Image (*)</label>
+                    <input type="file" class="form-control" name="driver_image" id="driver_image" accept="image/*" required>
                 </div>
             </div>
+            <div class="form-group">
+                <input type="checkbox" id="same_as_phone" />
+                <label for="same_as_phone">WhatsApp Number is the same as Phone Number</label>
+            </div>
             <div class="form-btn">
-                <button type="submit" class="th-btn fw-btn" id="bookTaxiBtn">Register Now <i class="fa-regular fa-arrow-right"></i></button>
+                <button type="submit" class="th-btn fw-btn" id="bookTaxiBtn">Submit Now <i class="fa-regular fa-arrow-right"></i></button>
             </div>
             <p class="form-messages mb-0 mt-3"></p>
         </form>
-
     </div>
 </div>
 
@@ -92,118 +101,138 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
     integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRsN/hYZyoD1t3R2TgC8X5dB2T2syuYrO6+rLdU5e" crossorigin="anonymous">
 </script>
-<script src="{{ asset('admin/libs/jquery/jquery.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-   $(document).ready(function() {
-    $('#bookingForm').submit(function(event) {
-        event.preventDefault();
-        $('#bookTaxiBtn').prop('disabled', true);
+    $(document).ready(function() {
+        $('#bookingForm').submit(function(event) {
+            event.preventDefault();
+            $('#bookTaxiBtn').prop('disabled', true);
 
-        if (!validateForm()) {
-            $('#bookTaxiBtn').prop('disabled', false);
-            return false;
+            if (!validateForm()) {
+                $('#bookTaxiBtn').prop('disabled', false);
+                return false;
+            }
+
+            var formData = new FormData(this);
+            if ($('#same_as_phone').is(':checked')) {
+                var phoneNumber = $('#number').val().trim();
+                formData.append('whatsapp_number', phoneNumber);
+            }
+
+            $.ajax({
+                url: $(this).attr('action'),
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    $('#bookingForm')[0].reset();
+                    Swal.fire({
+                        title: 'Submitted!',
+                        text: 'Your content was submitted successfully. Save this number 9446045678 for updates.',
+                        icon: 'success',
+                        confirmButtonText: 'OK',
+                        confirmButtonColor: '#0fb390'
+                    }).then(() => {
+                        setTimeout(function() {
+                            location.reload();
+                        }, 5000);
+                    });
+                    $('#bookTaxiBtn').prop('disabled', false);
+                },
+                error: function(xhr, status, error) {
+                    var errorMessages = xhr.responseJSON ? xhr.responseJSON.errors : {};
+
+                    // Display error messages for each field
+                    Object.keys(errorMessages).forEach(function(key) {
+                        var field = $('[name="' + key + '"]');
+                        field.addClass('is-invalid');
+                        field.next('.invalid-feedback').remove(); // Remove existing error messages
+                        field.after('<div class="invalid-feedback">' + errorMessages[key].join('<br>') + '</div>');
+                    });
+
+                    // Display a general error message if available
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        $('.form-messages').html('<div class="alert alert-danger">' + xhr.responseJSON.message + '</div>');
+                    } else {
+                        $('.form-messages').html('<div class="alert alert-danger">An error occurred</div>');
+                    }
+
+                    $('#bookTaxiBtn').prop('disabled', false);
+                }
+            });
+        });
+
+        function validateForm() {
+            var valid = true;
+
+            var fields = ['name', 'number', 'whatsapp_number', 'vehicle_type', 'seating_capacity', 'vehicle_number', 'parking_location', 'district'];
+
+            fields.forEach(function(field) {
+                var value = $('[name="' + field + '"]').val().trim();
+                if (value === "") {
+                    valid = false;
+                    var fieldElement = $('[name="' + field + '"]');
+                    fieldElement.addClass('is-invalid');
+                    fieldElement.next('.invalid-feedback').remove(); // Remove existing error messages
+                    fieldElement.after('<div class="invalid-feedback">This field is required</div>');
+                } else {
+                    $('[name="' + field + '"]').removeClass('is-invalid');
+                    $('[name="' + field + '"]').next('.invalid-feedback').remove(); // Remove existing error messages
+                }
+            });
+
+            if (!$('#same_as_phone').is(':checked')) {
+                var whatsappNumber = $('[name="whatsapp_number"]').val().trim();
+                if (whatsappNumber === "") {
+                    valid = false;
+                    var whatsappField = $('[name="whatsapp_number"]');
+                    whatsappField.addClass('is-invalid');
+                    whatsappField.next('.invalid-feedback').remove();
+                    whatsappField.after('<div class="invalid-feedback">WhatsApp Number is required</div>');
+                } else {
+                    $('[name="whatsapp_number"]').removeClass('is-invalid');
+                    $('[name="whatsapp_number"]').next('.invalid-feedback').remove();
+                }
+            }
+
+            var vehiclePhoto = $('[name="vehicle_photo"]').prop('files').length;
+            if (vehiclePhoto === 0) {
+                valid = false;
+                var vehiclePhotoField = $('[name="vehicle_photo"]');
+                vehiclePhotoField.addClass('is-invalid');
+                vehiclePhotoField.next('.invalid-feedback').remove(); // Remove existing error messages
+                vehiclePhotoField.after('<div class="invalid-feedback">Vehicle photo is required</div>');
+            } else {
+                $('[name="vehicle_photo"]').removeClass('is-invalid');
+                $('[name="vehicle_photo"]').next('.invalid-feedback').remove(); // Remove existing error messages
+            }
+
+            var driverImage = $('[name="driver_image"]').prop('files').length;
+            if (driverImage === 0) {
+                valid = false;
+                var driverImageField = $('[name="driver_image"]');
+                driverImageField.addClass('is-invalid');
+                driverImageField.next('.invalid-feedback').remove(); // Remove existing error messages
+                driverImageField.after('<div class="invalid-feedback">Driver image is required</div>');
+            } else {
+                $('[name="driver_image"]').removeClass('is-invalid');
+                $('[name="driver_image"]').next('.invalid-feedback').remove();
+            }
+
+            return valid;
         }
 
-        var formData = new FormData(this);
-
-        $.ajax({
-            url: $(this).attr('action'),
-            type: 'POST',
-            data: formData,
-            contentType: false,
-            processData: false,
-            success: function(response) {
-                $('#bookingForm')[0].reset();
-                toastr.success('Registartion completed successfully');
-                setTimeout(function() {
-                    location.reload();
-                }, 5000);
-                $('#bookTaxiBtn').prop('disabled', false);
-            },
-            error: function(xhr, status, error) {
-                var errorMessage = xhr.responseJSON.message;
-                $('.form-messages').html('<div class="alert alert-danger">' + errorMessage + '</div>');
-                $('#bookTaxiBtn').prop('disabled', false);
+        document.getElementById('same_as_phone').addEventListener('change', function() {
+            var phoneNumber = document.getElementById('number').value;
+            var whatsappNumber = document.getElementById('whatsapp');
+            if (this.checked) {
+                $("#whatsapp").val(phoneNumber);
+                whatsappNumber.disabled = true;
+            } else {
+                whatsappNumber.disabled = false;
             }
         });
     });
-
-    function validateForm() {
-        var valid = true;
-
-        var name = $('[name="name"]').val().trim();
-        if (name === "") {
-            valid = false;
-            $('[name="name"]').addClass('is-invalid');
-        } else {
-            $('[name="name"]').removeClass('is-invalid');
-        }
-
-        var number = $('[name="number"]').val().trim();
-        if (number === "") {
-            valid = false;
-            $('[name="number"]').addClass('is-invalid');
-        } else {
-            $('[name="number"]').removeClass('is-invalid');
-        }
-
-        var vehicle_type = $('[name="vehicle_type"]').val().trim();
-        if (vehicle_type === "") {
-            valid = false;
-            $('[name="vehicle_type"]').addClass('is-invalid');
-        } else {
-            $('[name="vehicle_type"]').removeClass('is-invalid');
-        }
-
-        var seating_capacity = $('[name="seating_capacity"]').val().trim();
-        if (seating_capacity === "") {
-            valid = false;
-            $('[name="seating_capacity"]').addClass('is-invalid');
-        } else {
-            $('[name="seating_capacity"]').removeClass('is-invalid');
-        }
-
-        var vehicle_number = $('[name="vehicle_number"]').val().trim();
-        if (vehicle_number === "") {
-            valid = false;
-            $('[name="vehicle_number"]').addClass('is-invalid');
-        } else {
-            $('[name="vehicle_number"]').removeClass('is-invalid');
-        }
-
-        var parking_location = $('[name="parking_location"]').val().trim();
-        if (parking_location === "") {
-            valid = false;
-            $('[name="parking_location"]').addClass('is-invalid');
-        } else {
-            $('[name="parking_location"]').removeClass('is-invalid');
-        }
-
-        var district = $('[name="district"]').val().trim();
-        if (district === "") {
-            valid = false;
-            $('[name="district"]').addClass('is-invalid');
-        } else {
-            $('[name="district"]').removeClass('is-invalid');
-        }
-
-        var vehicle_photo = $('[name="vehicle_photo"]').val().trim();
-        if (vehicle_photo === "") {
-            valid = false;
-            $('[name="vehicle_photo"]').addClass('is-invalid');
-        } else {
-            $('[name="vehicle_photo"]').removeClass('is-invalid');
-        }
-
-        var driver_image = $('[name="driver_image"]').val().trim();
-        if (driver_image === "") {
-            valid = false;
-            $('[name="driver_image"]').addClass('is-invalid');
-        } else {
-            $('[name="driver_image"]').removeClass('is-invalid');
-        }
-
-        return valid;
-    }
-});
 </script>
+

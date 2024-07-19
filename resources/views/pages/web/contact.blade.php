@@ -1,4 +1,5 @@
 @include('pages.web.includes.header')
+
 <div class="breadcumb-wrapper" data-bg-src="{{ asset('home/img/cont.jpg') }}" data-overlay="title" data-opacity="4">
     <div class="container z-index-common">
         <h1 class="breadcumb-title">Contact</h1>
@@ -8,6 +9,7 @@
         </ul>
     </div>
 </div>
+
 <section class="space" id="contact-sec">
     <div class="container">
         <div class="tab-content">
@@ -30,8 +32,7 @@
                                 <div class="contact-box_icon"><i class="fal fa-envelope-open-text"></i></div>
                                 <div class="contact-box_info">
                                     <p class="contact-box_text">Mail us</p>
-                                    <h5 class="contact-box_link"><a
-                                            href="mailto:info@keracabs.com">info@keracabs.com</a></h5>
+                                    <h5 class="contact-box_link"><a href="mailto:info@keracabs.com">info@keracabs.com</a></h5>
                                 </div>
                             </div>
                         </div>
@@ -42,18 +43,17 @@
                                 <div class="contact-box_icon"><i class="fal fa-map-location-dot"></i></div>
                                 <div class="contact-box_info">
                                     <p class="contact-box_text">Address</p>
-                                    <h5 class="contact-box_link">2nd Floor, ABS building, Opp. Edakkad Village
-                                        office, Thottada, kizhunna PO, Kannur -670007.</h5>
+                                    <h5 class="contact-box_link">2nd Floor, ABS building, Opp. Edakkad Village office, Thottada, kizhunna PO, Kannur -670007.</h5>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </section>
+
 <section class="space-bottom position-relative">
     <div class="container">
         <div class="contact-form-wrapper">
@@ -67,28 +67,39 @@
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <form action="{{ route('send-mail') }}" method="POST" class="contact-form"
-                        id="contactForm">
+                    <form action="{{ route('send-mail') }}" method="POST" class="contact-form" id="contactForm">
                         @csrf
                         <div class="title-area mb-30 text-center text-lg-start">
                             <h2 class="sec-title">Get A <span class="text-theme">Free</span> Quote</h2>
                         </div>
                         <div class="row">
-                            <div class="form-group col-md-6"><input type="text" class="form-control" name="name"
-                                    id="name" placeholder="Enter Your Name" /> <i class="fal fa-user"></i></div>
-                            <div class="form-group col-md-6"><input type="email" class="form-control" name="email"
-                                    id="email" placeholder="Email Address" /> <i class="fal fa-envelope"></i></div>
-                            <div class="form-group col-md-12"><input type="number" class="form-control" name="phone"
-                                    id="phone" placeholder="Phone Number" /> <i class="fa-light fa-phone"></i></div>
-                            <div class="form-group col-md-12"><input type="text" class="form-control" name="subject"
-                                    id="subject" placeholder="Subject" /> <i class="fa-light fa-pen"></i></div>
-
+                            <div class="form-group col-md-6">
+                                <input type="text" class="form-control" name="name" id="name" placeholder="Enter Your Name" />
+                                <i class="fal fa-user"></i>
+                                <div class="invalid-feedback">Please enter your name.</div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <input type="email" class="form-control" name="email" id="email" placeholder="Email Address" />
+                                <i class="fal fa-envelope"></i>
+                                <div class="invalid-feedback">Please enter a valid email address.</div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <input type="number" class="form-control" name="phone" id="phone" placeholder="Phone Number" />
+                                <i class="fa-light fa-phone"></i>
+                                <div class="invalid-feedback">Please enter your phone number.</div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" />
+                                <i class="fa-light fa-pen"></i>
+                                <div class="invalid-feedback">Please enter a subject.</div>
+                            </div>
                             <div class="form-group col-12">
-                                <textarea name="message" id="message" cols="30" rows="3" class="form-control" placeholder="Message"></textarea> <i class="fal fa-comment"></i>
+                                <textarea name="message" id="message" cols="30" rows="3" class="form-control" placeholder="Message"></textarea>
+                                <i class="fal fa-comment"></i>
+                                <div class="invalid-feedback">Please enter your message.</div>
                             </div>
                             <div class="form-btn col-12 text-center">
-                                <button class="th-btn fw-btn">Send Message<i
-                                        class="fa-regular fa-arrow-right"></i></button>
+                                <button type="submit" class="th-btn fw-btn">Send Message<i class="fa-regular fa-arrow-right"></i></button>
                             </div>
                         </div>
                         <p class="form-messages mb-0 mt-3"></p>
@@ -98,6 +109,7 @@
         </div>
     </div>
 </section>
+
 <div class="scroll-top">
     <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
         <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"
@@ -105,88 +117,89 @@
         </path>
     </svg>
 </div>
+
 <div class="whatsappDiv">
     <a href="https://api.whatsapp.com/send?phone=919446045678"><img src="{{ asset('home/img/whatsapp.png') }}"></a>
 </div>
+
 @include('pages.web.includes.footer')
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
     integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRsN/hYZyoD1t3R2TgC8X5dB2T2syuYrO6+rLdU5e" crossorigin="anonymous">
 </script>
 <script src="{{ asset('admin/libs/jquery/jquery.min.js') }}"></script>
-<script>
-  $(document).ready(function() {
-    $('#contactForm').submit(function(event) {
-        $('#contactForm button').prop('disabled', true);
-        if (!validateForm()) {
-            $('#contactForm button').prop('disabled', false);
-            return false;
-        }
-        event.preventDefault();
-        var formData = $(this).serialize();
-        $.ajax({
-            url: $(this).attr('action'),
-            type: 'POST',
-            data: formData,
-            success: function(response) {
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('#contactForm').on('submit', function(event) {
+            event.preventDefault();
+            $('#contactForm button').prop('disabled', true);
 
-                $('#contactForm')[0].reset();
-                toastr.success('Contact submitted successfully');
-                setTimeout(function() {
-                    location.reload();
-                }, 5000);
+            if (!validateForm()) {
                 $('#contactForm button').prop('disabled', false);
-            },
-            error: function(xhr, status, error) {
-                var errorMessage = xhr.responseJSON && xhr.responseJSON.message ? xhr.responseJSON.message : 'Oops! An error occurred.';
-                $('.form-messages').html('<div class="alert alert-danger">' + errorMessage + '</div>');
-                $('#contactForm button').prop('disabled', false);
+                return false;
             }
+
+            var formData = new FormData(this);
+
+            $.ajax({
+                url: $(this).attr('action'),
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    $('#contactForm')[0].reset();
+                    toastr.success('Contact submitted successfully');
+                    setTimeout(function() {
+                        location.reload();
+                    }, 5000);
+                },
+                error: function(xhr) {
+                    $('#contactForm button').prop('disabled', false);
+
+                    if (xhr.status === 422) { // Validation errors
+                        var errors = xhr.responseJSON.errors;
+                        $('.form-messages').empty();
+                        $.each(errors, function(key, messages) {
+                            var input = $('#' + key);
+                            input.addClass('is-invalid');
+                            var feedback = input.siblings('.invalid-feedback');
+                            feedback.text(messages.join(' '));
+                            feedback.show();
+                        });
+                    } else {
+                        var errorMessage = xhr.responseJSON && xhr.responseJSON.message ? xhr.responseJSON.message : 'Oops! An error occurred.';
+                        $('.form-messages').html('<div class="alert alert-danger">' + errorMessage + '</div>');
+                    }
+                }
+            });
         });
+
+        function validateForm() {
+            var valid = true;
+            var fields = ['name', 'email', 'phone', 'subject', 'message'];
+
+            fields.forEach(function(field) {
+                var value = $('[name="' + field + '"]').val().trim();
+                var $field = $('[name="' + field + '"]');
+
+                if (value === "" || (field === 'email' && !isValidEmail(value))) {
+                    valid = false;
+                    $field.addClass('is-invalid');
+                } else {
+                    $field.removeClass('is-invalid');
+                }
+            });
+
+            return valid;
+        }
+
+        function isValidEmail(email) {
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
     });
-    function validateForm() {
-        var valid = true;
-        var name = $('[name="name"]').val().trim();
-        if (name === "") {
-            valid = false;
-            $('[name="name"]').addClass('is-invalid');
-        } else {
-            $('[name="name"]').removeClass('is-invalid');
-        }
-        var email = $('[name="email"]').val();
-        if (!isValidEmail(email)) {
-            valid = false;
-            $('[name="email"]').addClass('is-invalid');
-        } else {
-            $('[name="email"]').removeClass('is-invalid');
-        }
-        var phone = $('[name="phone"]').val().trim();
-        if (phone === "") {
-            valid = false;
-            $('[name="phone"]').addClass('is-invalid');
-        } else {
-            $('[name="phone"]').removeClass('is-invalid');
-        }
-        var subject = $('[name="subject"]').val().trim();
-        if (subject === "") {
-            valid = false;
-            $('[name="subject"]').addClass('is-invalid');
-        } else {
-            $('[name="subject"]').removeClass('is-invalid');
-        }
-        var message = $('[name="message"]').val().trim();
-        if (message === "") {
-            valid = false;
-            $('[name="message"]').addClass('is-invalid');
-        } else {
-            $('[name="message"]').removeClass('is-invalid');
-        }
-
-        return valid;
-    }
-    function isValidEmail(email) {
-        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
-    }
-});
-
 </script>
+

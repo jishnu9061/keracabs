@@ -21,6 +21,7 @@ class Registration extends Model
         'district',
         'vehicle_photo',
         'driver_image',
+        'whatsapp_number'
     ];
 
     public static function getTableName()

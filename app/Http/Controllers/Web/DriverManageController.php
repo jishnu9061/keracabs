@@ -34,6 +34,7 @@ class DriverManageController extends Controller
             'vehicle_number' => $request->vehicle_number,
             'parking_location' => $request->parking_location,
             'district' => $request->district,
+            'whatsapp_number'=>$request->whatsapp_number
         ]);
         if ($request->hasFile('vehicle_photo')) {
             $res = FileManager::upload(FileDestinations::VEHICLE_PHOTO, 'vehicle_photo', FileManager::FILE_TYPE_IMAGE);
