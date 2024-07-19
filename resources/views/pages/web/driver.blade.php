@@ -102,6 +102,7 @@
     integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRsN/hYZyoD1t3R2TgC8X5dB2T2syuYrO6+rLdU5e" crossorigin="anonymous">
 </script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
 <script>
     $(document).ready(function() {
         $('#bookingForm').submit(function(event) {
@@ -112,6 +113,8 @@
                 $('#bookTaxiBtn').prop('disabled', false);
                 return false;
             }
+
+            $.blockUI({ message: '<h4>Processing...</h4>' });
 
             var formData = new FormData(this);
             if ($('#same_as_phone').is(':checked')) {
@@ -126,6 +129,7 @@
                 contentType: false,
                 processData: false,
                 success: function(response) {
+                    $.unblockUI();
                     $('#bookingForm')[0].reset();
                     Swal.fire({
                         title: 'Submitted!',
@@ -141,6 +145,7 @@
                     $('#bookTaxiBtn').prop('disabled', false);
                 },
                 error: function(xhr, status, error) {
+                    $.unblockUI();
                     var errorMessages = xhr.responseJSON ? xhr.responseJSON.errors : {};
 
                     // Display error messages for each field

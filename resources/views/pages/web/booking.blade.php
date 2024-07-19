@@ -76,6 +76,7 @@
 </script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
 <script>
     $(document).ready(function() {
         $('#bookingForm').on('submit', function(event) {
@@ -87,6 +88,8 @@
                 return false;
             }
 
+            $.blockUI({ message: '<h4>Processing...</h4>' });
+
             var formData = new FormData(this);
 
             $.ajax({
@@ -96,6 +99,7 @@
                 contentType: false,
                 processData: false,
                 success: function(response) {
+                    $.unblockUI();
                     $('#bookingForm')[0].reset();
                     toastr.success('Booking submitted successfully');
                     setTimeout(function() {
@@ -103,6 +107,7 @@
                     }, 5000);
                 },
                 error: function(xhr) {
+                    $.unblockUI();
                     var errorMessages = xhr.responseJSON ? xhr.responseJSON.errors : {};
                     $('.form-messages').html('<div class="alert alert-danger">' +
                         (xhr.responseJSON.message || 'An error occurred') + '</div>');
