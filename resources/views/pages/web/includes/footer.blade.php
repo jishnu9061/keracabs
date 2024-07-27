@@ -76,6 +76,8 @@
 </div>
 <div class="whatsappDiv">
     <a href="https://api.whatsapp.com/send?phone=919446045678"><img src="{{ asset('home/img/whatsapp.png') }}"></a>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 </div>
 <script src="{{ asset('home/js/vendor/jquery-3.6.0.min.js') }}"></script>
 <script src="{{ asset('home/js/slick.min.js') }}"></script>

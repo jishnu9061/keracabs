@@ -97,6 +97,7 @@
                                 <textarea name="message" id="message" cols="30" rows="3" class="form-control" placeholder="Message"></textarea>
                                 <i class="fal fa-comment"></i>
                                 <div class="invalid-feedback">Please enter your message.</div>
+                                <div class="g-recaptcha mt-3" data-sitekey="6LdVxxgqAAAAAC7YvtmWf1bF3SHvynrSUfpuG8pV"></div>
                             </div>
                             <div class="form-btn col-12 text-center">
                                 <button type="submit" class="th-btn fw-btn">Send Message<i class="fa-regular fa-arrow-right"></i></button>
@@ -109,6 +110,45 @@
         </div>
     </div>
 </section>
+
+ <script>
+        function validateRecaptcha() {
+            var response = grecaptcha.getResponse();
+            if(response.length == 0) {
+                alert("Please complete the CAPTCHA.");
+                return false;
+            }
+            return true;
+        }
+    </script>
+
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $recaptcha_secret = '6LdVxxgqAAAAAEwtEjCKC2ddQEsta5K9G24QTk_L';
+    $recaptcha_response = $_POST['g-recaptcha-response'];
+
+    if (empty($recaptcha_response)) {
+        die('Please complete the CAPTCHA.');
+    }
+
+    $response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$recaptcha_secret&response=$recaptcha_response");
+    $responseKeys = json_decode($response, true);
+
+    if (intval($responseKeys["success"]) !== 1) {
+        die('CAPTCHA validation failed.');
+    } else {
+        // CAPTCHA was successfully completed
+        // Process the form data
+        // Example:
+        $name = $_POST['name'];
+        $email = $_POST['email'];
+        $message = $_POST['message'];
+
+        // Your form processing code here
+        echo 'Form submitted successfully.';
+    }
+}
+?>
 
 <div class="scroll-top">
     <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
@@ -131,13 +171,14 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
-    <script>
+
+  <script>
     $(document).ready(function() {
         $('#contactForm').on('submit', function(event) {
             event.preventDefault();
             $('#contactForm button').prop('disabled', true);
 
-            if (!validateForm()) {
+            if (!validateForm() || !validateRecaptcha()) {
                 $('#contactForm button').prop('disabled', false);
                 return false;
             }
@@ -145,6 +186,7 @@
             $.blockUI({ message: '<h4>Processing...</h4>' });
 
             var formData = new FormData(this);
+            formData.append('g-recaptcha-response', grecaptcha.getResponse());
 
             $.ajax({
                 url: $(this).attr('action'),
@@ -164,11 +206,11 @@
                     $.unblockUI();
                     $('#contactForm button').prop('disabled', false);
 
-                    if (xhr.status === 422) { 
+                    if (xhr.status === 422) {
                         var errors = xhr.responseJSON.errors;
                         $('.form-messages').empty();
                         $.each(errors, function(key, messages) {
-                            var input = $('#' + key);
+                            var input = $('[name="' + key + '"]');
                             input.addClass('is-invalid');
                             var feedback = input.siblings('.invalid-feedback');
                             feedback.text(messages.join(' '));
@@ -193,12 +235,23 @@
                 if (value === "" || (field === 'email' && !isValidEmail(value))) {
                     valid = false;
                     $field.addClass('is-invalid');
+                    $field.siblings('.invalid-feedback').show();
                 } else {
                     $field.removeClass('is-invalid');
+                    $field.siblings('.invalid-feedback').hide();
                 }
             });
 
             return valid;
+        }
+
+        function validateRecaptcha() {
+            var response = grecaptcha.getResponse();
+            if (response.length === 0) {
+                $('.form-messages').html('<div class="alert alert-danger">Please complete the CAPTCHA.</div>');
+                return false;
+            }
+            return true;
         }
 
         function isValidEmail(email) {
@@ -206,5 +259,8 @@
             return emailRegex.test(email);
         }
     });
+</script>
+
+
 </script>
 

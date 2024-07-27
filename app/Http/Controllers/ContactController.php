@@ -9,19 +9,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Constants\FileDestinations;
-
-use App\Http\Helpers\Utilities\ToastrHelper;
+use GuzzleHttp\Client;
 
 use App\Models\Contact;
 
-use App\Http\Requests\SendMailRequest;
+use ReCaptcha\ReCaptcha;
 
 use App\Mail\ContactMail;
 
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Http;
+
 use Illuminate\Support\Facades\Mail;
+use App\Http\Requests\SendMailRequest;
+use App\Http\Constants\FileDestinations;
 use Illuminate\Support\Facades\Response;
+use App\Http\Helpers\Utilities\ToastrHelper;
+use PSpell\Config;
 
 class ContactController extends Controller
 {
@@ -44,6 +48,15 @@ class ContactController extends Controller
      */
     public function sendMail(SendMailRequest $request)
     {
+        $recaptcha = new Config(env('RECAPTCHA_SECRET'));
+        $resp = $recaptcha->verify($request->input('g-recaptcha-response'), $request->ip());
+
+
+        if (!$resp->isSuccess()) {
+            return back()->withErrors(['captcha' => 'reCAPTCHA verification failed.']);
+        }
+
+
         $contact = Contact::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -52,9 +65,11 @@ class ContactController extends Controller
             'message' => $request->message,
             'date' => Carbon::now()->format('Y-m-d')
         ]);
+
         Mail::to('jishnuganesh27@gmail.com')->send(new ContactMail($contact));
-        return Response::json(['success' => true]);
+        return response()->json(['success' => true]);
     }
+
 
     /**
      * @param Contact $contact
