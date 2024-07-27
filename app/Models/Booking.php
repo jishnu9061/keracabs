@@ -16,7 +16,12 @@ class Booking extends Model
         'phone',
         'email',
         'vehicle',
-        'message'
+        'message',
+        'vehicle_type',
+        'start_date',
+        'end_date',
+        'start_time',
+        'end_time'
     ];
 
     public static function getTableName()

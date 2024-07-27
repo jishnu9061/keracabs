@@ -48,6 +48,11 @@ class BookingMail extends Mailable
                 'email' => $this->booking->email,
                 'car' => $this->booking->vehicle,
                 'message' => $this->booking->message,
+                'start_date' => $this->booking->start_date,
+                'end_date' => $this->booking->end_date,
+                'start_time' => $this->booking->start_time,
+                'end_time' => $this->booking->end_time,
+                'vehicle_type' => $this->booking->vehicle_type
             ],
         );
     }
@@ -62,5 +67,3 @@ class BookingMail extends Mailable
         return [];
     }
 }
-
-

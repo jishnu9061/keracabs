@@ -27,6 +27,11 @@ class SendBookingStoreRequest extends FormRequest
             'email' => 'required|email|max:255',
             'vehicle' => 'required|string',
             'message' => 'nullable|string|max:500',
+            'start_date' => 'required|date|after_or_equal:today',
+            'end_date' => 'required|date|after_or_equal:start_date',
+            'start_time' => 'nullable|date_format:H:i',
+            'end_time' => 'nullable|date_format:H:i|after:start_time',
+            'vehicle_type' => 'required|string|max:255'
         ];
     }
 }
