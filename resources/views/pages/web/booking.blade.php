@@ -45,6 +45,27 @@
                     </select>
                     <div class="invalid-feedback">Please select a vehicle.</div>
                 </div>
+                <div class="form-group col-sm-6">
+                    <input type="text" class="form-control" name="vehicle_type" id="vehicle_type" placeholder="Type vehicle" />
+                    <i class="fal fa-car"></i>
+                    <div class="invalid-feedback">Type vehicle</div>
+                </div>
+                <div class="form-group col-sm-6">
+                    <input type="date" class="form-control" name="start_date" id="start_date" placeholder="Start Date" />
+                    <div class="invalid-feedback">Please select a start date.</div>
+                </div>
+                <div class="form-group col-sm-6">
+                    <input type="date" class="form-control" name="end_date" id="end_date" placeholder="End Date" />
+                    <div class="invalid-feedback">Please select an end date.</div>
+                </div>
+                <div class="form-group col-sm-6">
+                    <input type="time" class="form-control" name="start_time" id="start_time" placeholder="Start Time" />
+                    <div class="invalid-feedback">Please select a start time.</div>
+                </div>
+                <div class="form-group col-sm-6">
+                    <input type="time" class="form-control" name="end_time" id="end_time" placeholder="End Time" />
+                    <div class="invalid-feedback">Please select an end time.</div>
+                </div>
                 <div class="form-group col-12">
                     <textarea placeholder="Write a Message...." name="message" id="message" class="form-control"></textarea>
                     <i class="fa-sharp fa-light fa-pencil"></i>
@@ -134,7 +155,7 @@
             $('.form-control').removeClass('is-invalid');
             $('.invalid-feedback').remove();
 
-            var fields = ['name', 'number', 'email', 'vehicle', 'message'];
+            var fields = ['name', 'number', 'email', 'vehicle', 'start_date', 'end_date', 'message'];
 
             fields.forEach(function(field) {
                 var value = $('[name="' + field + '"]').val().trim();
@@ -145,6 +166,7 @@
                     fieldElement.after('<div class="invalid-feedback">This field is required</div>');
                 }
             });
+
             var email = $('[name="email"]').val().trim();
             if (!isValidEmail(email)) {
                 valid = false;
