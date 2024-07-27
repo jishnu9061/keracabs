@@ -24,7 +24,7 @@ class BookingController extends Controller
     public function index()
     {
         $path = $this->getView('admin.booking.index');
-        $bookings = Booking::select('id', 'name', 'phone', 'email', 'vehicle', 'message', 'created_at')->get();
+        $bookings = Booking::select('id', 'name', 'phone', 'email', 'vehicle', 'message', 'created_at', 'vehicle_type', 'start_date', 'end_date', 'start_time', 'end_time')->get();
         $para = ['bookings' => $bookings];
         $title = 'Bookings';
         return $this->renderView($path, $para, $title);
