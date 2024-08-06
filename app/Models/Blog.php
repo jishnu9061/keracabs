@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use Illuminate\Support\Str;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -15,7 +16,23 @@ class Blog extends Model
         'title',
         'image',
         'description',
+        'slug',
+        'keyword',
+        'blog_details'
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($blog) {
+            $blog->slug = Str::slug($blog->title);
+        });
+
+        static::updating(function ($blog) {
+            $blog->slug = Str::slug($blog->title);
+        });
+    }
 
     public static function getTableName()
     {

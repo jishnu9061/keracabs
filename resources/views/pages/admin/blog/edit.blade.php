@@ -19,64 +19,88 @@
                 <div class="card-body">
                     <form action="{{ route('blog.update', $blog->id) }}" method="post" enctype="multipart/form-data">
                         @csrf
+                        @method('PUT') <!-- Include the PUT method for updates -->
                         <div>
-
                             <div class="row align-items-center">
+                                <!-- Title Field -->
                                 <div class="col-lg-6 col-md-6">
                                     <div class="mb-4">
-                                        <label for="choices-single-default" class="form-label">Title
-                                        </label>
-                                        <input class="form-control ron" type="text" name="title"
-                                            value="{{ old('title', $blog->title) }}" id="example-text-input">
+                                        <label for="title" class="form-label">Title</label>
+                                        <input class="form-control" type="text" name="title" value="{{ old('title', $blog->title) }}" id="title">
+                                        @error('title')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
-                                    @error('title')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
                                 </div>
 
+                                <!-- Image Field -->
                                 <div class="col-lg-6">
                                     <div class="mb-4">
-                                        <label class="form-label">Images</label>
-                                        <input type="file" class="form-control" name="image">
+                                        <label for="image" class="form-label">Images</label>
+                                        <input type="file" class="form-control" name="image" id="image">
+                                        @error('image')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
+
+                                <!-- Display existing image -->
                                 @if ($blog->image)
-                                    <img src="{{ \App\Http\Helpers\BlogHelper::getBlogImagePath($blog->image) }}" style="float:left; left:50%; width:20%;"
-                                        alt="Blog Image">
+                                    <div class="col-lg-6">
+                                        <img src="{{ \App\Http\Helpers\BlogHelper::getBlogImagePath($blog->image) }}" style="float:left; width:20%;" alt="Blog Image">
+                                    </div>
                                 @else
-                                    <p>No image available</p>
+                                    <div class="col-lg-6">
+                                        <p>No image available</p>
+                                    </div>
                                 @endif
+
+                                <!-- Keywords Field -->
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="mb-4">
+                                        <label for="keywords" class="form-label">Keywords</label>
+                                        <input class="form-control" type="text" name="keywords" value="{{ old('keywords', $blog->keyword) }}" id="keywords">
+                                        @error('keywords')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <!-- Description Field -->
+                                <div class="col-lg-12">
+                                    <div class="mb-4">
+                                        <label for="description" class="form-label">Description</label>
+                                        <textarea class="form-control" name="description" id="description">{{ old('description', $blog->description) }}</textarea>
+                                        @error('description')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <!-- Blog Details Field -->
                                 <div class="col-lg-12">
                                     <div class="mb-3">
                                         <label for="ckeditor-classic" class="form-label">Blog details</label>
-                                        <textarea name="description" id="ckeditor-classic">{{ old('description', $blog->description) }}</textarea>
-                                        @error('description')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                                        <textarea name="blog_details" id="ckeditor-classic">{{ old('blog_details', $blog->blog_details) }}</textarea>
+                                        @error('blog_details')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
 
+                                <!-- Submit Button -->
                                 <div class="text-right mt-4">
-                                    <button type="submit" class="btn btn-primary waves-effect waves-light">Submit
-                                    </button>
+                                    <button type="submit" class="btn btn-primary waves-effect waves-light">Submit</button>
                                 </div>
                             </div>
                             <!-- end row -->
                         </div>
-                        <!-- Single select input Example -->
                     </form>
-
-
-
-
                 </div>
                 <!-- end card body -->
             </div>
             <!-- end card -->
         </div>
         <!-- end col -->
-    </div>
-
-    </div>
     </div>
 @endsection

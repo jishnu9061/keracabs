@@ -19,11 +19,11 @@
                                 alt="Blog Image" /></div>
                         <div class="blog-content">
                             <div class="blog-meta">
-                                <a href="blog.html"><i
+                                <a href="javascript:;"><i
                                         class="far fa-calendar-alt"></i>{{ $blog->created_at->format('F d, Y') }}</a>
                             </div>
                             <h2 class="blog-title">{{ $blog->title }}</h2>
-                            <p>{!! $blog->description !!}</p>
+                            <p>{!! $blog->blog_details !!}</p>
                         </div>
                     </div>
                 </div>
@@ -41,17 +41,17 @@
                                 @foreach ($recentPosts as $post)
                                     <div class="recent-post">
                                         <div class="media-img">
-                                            <a href="{{ route('blog-detail', $post->id) }}"><img
+                                            <a href="{{ route('blog-detail', $post->slug) }}"><img
                                                     src="{{ \App\Http\Helpers\BlogHelper::getBlogImagePath($post->image) }}"
                                                     alt="Blog Image" /></a>
                                         </div>
                                         <div class="media-body">
                                             <div class="recent-post-meta">
-                                                <a href="{{ route('blogs', $post->id) }}"><i
+                                                <a href="{{ route('blogs', $post->slug) }}"><i
                                                         class="fas fa-calendar-alt"></i>{{ $post->created_at->format('F d, Y') }}</a>
                                             </div>
                                             <h4 class="post-title"><a class="text-inherit"
-                                                    href="{{ route('blog-detail', $post->id) }}">{{ $post->title }}</a>
+                                                    href="{{ route('blog-detail', $post->slug) }}">{{ $post->title }}</a>
                                             </h4>
                                         </div>
                                     </div>

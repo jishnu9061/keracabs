@@ -25,8 +25,8 @@ class WebBlogController extends Controller
     public function index()
     {
         $path = $this->getView('web.blog');
-        $blogs = Blog::select('id', 'title', 'image', 'description', 'created_at')->limit(8)->get();
-        $recentBlogs = Blog::select('id', 'title', 'image', 'description', 'created_at')->latest()->limit(4)->get();
+        $blogs = Blog::select('id', 'title', 'image', 'description', 'created_at', 'slug', 'keyword', 'blog_details')->limit(8)->get();
+        $recentBlogs = Blog::select('id', 'title', 'image', 'description', 'created_at','slug', 'keyword', 'blog_details')->latest()->limit(4)->get();
         $para = ['blogs' => $blogs, 'recentBlogs' => $recentBlogs];
         $title = 'Blog';
         return $this->renderView($path, $para, $title);
@@ -40,10 +40,11 @@ class WebBlogController extends Controller
      *
      * @return [type]
      */
-    public function blogDetailPage(Request $request, Blog $blog)
+    public function blogDetailPage(Request $request, $slug)
     {
         $path = $this->getView('web.blog-detail');
-        $recentPosts = Blog::select('id', 'title', 'image', 'description', 'created_at')->latest()->limit(4)->get();
+        $blog = Blog::where('slug', $slug)->firstOrFail();
+        $recentPosts = Blog::select('id', 'title', 'image', 'description', 'created_at', 'slug', 'keyword', 'blog_details')->latest()->limit(4)->get();
         $para = ['recentPosts' => $recentPosts, 'blog' => $blog];
         $title = 'Blog Detail';
         return $this->renderView($path, $para, $title);

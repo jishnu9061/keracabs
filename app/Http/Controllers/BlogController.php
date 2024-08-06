@@ -29,7 +29,7 @@ class BlogController extends Controller
     public function index()
     {
         $path = $this->getView('admin.blog.index');
-        $blogs = Blog::select('id', 'title', 'image', 'created_at', 'description')->get();
+        $blogs = Blog::select('id', 'title', 'image', 'created_at', 'description', 'blog_details', 'slug', 'keyword')->get();
         $para = ['blogs' => $blogs];
         $title = 'Blogs';
         return $this->renderView($path, $para, $title);
@@ -56,7 +56,9 @@ class BlogController extends Controller
         try {
             $blog = Blog::create([
                 'title' => $request->title,
+                'keyword' => $request->keywords,
                 'description' => $request->description,
+                'blog_details' => $request->blog_details
             ]);
 
             if ($request->hasFile('image')) {
@@ -94,9 +96,12 @@ class BlogController extends Controller
      */
     public function update(BlogUpdateRequest $request, Blog $blog)
     {
+        // dd($request->all());
         $blog->update([
             'title' => $request->title,
-            'blog_details' => $request->blog_details,
+            'keyword' => $request->keywords,
+            'description' => $request->description,
+            'blog_details' => $request->blog_details
         ]);
         if ($request->hasFile('image')) {
             $res = FileManager::upload(FileDestinations::BLOG_IMAGE, 'image', FileManager::FILE_TYPE_IMAGE);

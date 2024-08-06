@@ -22,9 +22,11 @@ class BlogStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:255',
+            'title' => 'required|string|max:255|unique:blogs',
+            'keywords' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'description' => 'required|string',
+            'blog_details' => 'nullable|string',
         ];
     }
 }
