@@ -22,9 +22,9 @@
                                 <tr>
                                     <th>Sl.No</th>
                                     <th>Booked Date</th>
-                                    <th>Start Date</th>
+                                    {{-- <th>Start Date</th> --}}
                                     <th>Start Time</th>
-                                    <th>End Date</th>
+                                    {{-- <th>End Date</th> --}}
                                     <th>End Time</th>
                                     <th>Name</th>
                                     <th>Phone No</th>
@@ -41,10 +41,10 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $booking->created_at ? $booking->created_at->format('d/m/Y') : 'N/A' }}</td>
-                                        <td>{{ $booking->start_date ? $booking->start_date->format('d/m/Y') : 'N/A' }}</td>
+                                        {{-- <td>{{ $booking->start_date ? $booking->start_date->format('d/m/Y') : 'N/A' }}</td> --}}
                                         <td>{{ $booking->start_time ? \Carbon\Carbon::parse($booking->start_time)->format('H:i') : 'N/A' }}
                                         </td>
-                                        <td>{{ $booking->end_date ? $booking->end_date->format('d/m/Y') : 'N/A' }}</td>
+                                        {{-- <td>{{ $booking->end_date ? $booking->end_date->format('d/m/Y') : 'N/A' }}</td> --}}
                                         <td>{{ $booking->end_time ? \Carbon\Carbon::parse($booking->end_time)->format('H:i') : 'N/A' }}
                                         </td>
                                         <td>{{ $booking->name }}</td>

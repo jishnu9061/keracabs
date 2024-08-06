@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use Illuminate\Support\Str;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,7 +11,7 @@ class Blog extends Model
 {
     use HasFactory;
 
-    protected $table= 'blogs';
+    protected $table = 'blogs';
 
     protected $fillable = [
         'title',
@@ -18,7 +19,8 @@ class Blog extends Model
         'description',
         'slug',
         'keyword',
-        'blog_details'
+        'blog_details',
+        'seo_title'
     ];
 
     protected static function boot()

@@ -22,7 +22,8 @@ class BlogStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:255|unique:blogs',
+            'title' => 'required|string|max:255',
+            'seo_title' => 'required|string|max:255',
             'keywords' => 'nullable|string|max:255',
             'description' => 'nullable|string',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',

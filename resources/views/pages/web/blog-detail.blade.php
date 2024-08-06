@@ -1,4 +1,11 @@
-@include('pages.web.includes.header')
+
+@extends('pages.web.includes.header')
+
+@section('meta_title', $blog->title)
+@section('meta_key', $blog->keyword)
+@section('meta_description', $blog->description)
+
+@section('content')
 <div class="breadcumb-wrapper" data-bg-src="{{ asset('home/img/abt.jpg') }}" data-overlay="title" data-opacity="4">
     <div class="container z-index-common">
         <h1 class="breadcumb-title">Blog Details</h1>

@@ -25,7 +25,8 @@
                                 <div class="col-lg-6 col-md-6">
                                     <div class="mb-4">
                                         <label for="title" class="form-label">Title</label>
-                                        <input class="form-control" type="text" name="title" value="{{ old('title') }}" id="title">
+                                        <input class="form-control" type="text" name="title"
+                                            value="{{ old('title') }}" id="title">
                                         @error('title')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -47,12 +48,26 @@
                                 <div class="col-lg-6 col-md-6">
                                     <div class="mb-4">
                                         <label for="keywords" class="form-label">Keywords</label>
-                                        <input class="form-control" type="text" name="keywords" value="{{ old('keywords') }}" id="keywords">
+                                        <input class="form-control" type="text" name="keywords"
+                                            value="{{ old('keywords') }}" id="keywords">
                                         @error('keywords')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
+
+                                <!-- Slug Field -->
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="mb-4">
+                                        <label for="slug" class="form-label">Seo Title</label>
+                                        <input class="form-control" type="text" name="seo_title"
+                                            value="{{ old('seo_title') }}" id="slug">
+                                        @error('slug')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+
 
                                 <!-- Description Field -->
                                 <div class="col-lg-12">

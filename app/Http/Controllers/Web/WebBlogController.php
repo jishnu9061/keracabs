@@ -44,7 +44,7 @@ class WebBlogController extends Controller
     {
         $path = $this->getView('web.blog-detail');
         $blog = Blog::where('slug', $slug)->firstOrFail();
-        $recentPosts = Blog::select('id', 'title', 'image', 'description', 'created_at', 'slug', 'keyword', 'blog_details')->latest()->limit(4)->get();
+        $recentPosts = Blog::select('id', 'title', 'image', 'description', 'created_at', 'slug', 'keyword', 'blog_details','seo_title')->latest()->limit(4)->get();
         $para = ['recentPosts' => $recentPosts, 'blog' => $blog];
         $title = 'Blog Detail';
         return $this->renderView($path, $para, $title);

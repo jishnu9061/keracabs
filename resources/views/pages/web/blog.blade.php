@@ -19,23 +19,23 @@
                             <div class="col-lg-6 col-xl-6">
                                 <div class="th-blog blog-single has-post-thumbnail">
                                     <div class="blog-img">
-                                        <a href="{{ route('blog-detail', $blog->id) }}">
+                                        <a href="{{ route('blog-detail', $blog->slug) }}">
                                             <img src="{{ \App\Http\Helpers\BlogHelper::getBlogImagePath($blog->image) }}"
                                                 alt="Blog Image" />
                                         </a>
                                     </div>
                                     <div class="blog-content">
                                         <div class="blog-meta">
-                                            <a href="{{ route('blog-detail', $blog->id) }}">
+                                            <a href="{{ route('blog-detail', $blog->slug) }}">
                                                 <i
                                                     class="fas fa-calendar-alt"></i>{{ $blog->created_at->format('F d, Y') }}
                                             </a>
                                         </div>
                                         <h2 class="blog-title">
-                                            <a href="{{ route('blog-detail', $blog->id) }}">{{ $blog->title }}</a>
+                                            <a href="{{ route('blog-detail', $blog->slug) }}">{{ $blog->title }}</a>
                                         </h2>
-                                        <p>{{ Str::limit(strip_tags($blog->description), 150, '...') }}</p>
-                                        <a href="{{ route('blog-detail', $blog->id) }}" class="th-btn">Read Details</a>
+                                        <p>{{ Str::limit(strip_tags($blog->blog_details), 150, '...') }}</p>
+                                        <a href="{{ route('blog-detail', $blog->slug) }}" class="th-btn">Read Details</a>
                                     </div>
                                 </div>
                             </div>
@@ -56,21 +56,21 @@
                                 @foreach ($recentBlogs as $recentBlog)
                                     <div class="recent-post">
                                         <div class="media-img">
-                                            <a href="{{ route('blog-detail', $recentBlog->id) }}">
+                                            <a href="{{ route('blog-detail', $recentBlog->slug) }}">
                                                 <img src="{{ \App\Http\Helpers\BlogHelper::getBlogImagePath($recentBlog->image) }}"
                                                     alt="Blog Image" />
                                             </a>
                                         </div>
                                         <div class="media-body">
                                             <div class="recent-post-meta">
-                                                <a href="{{ route('blog-detail', $recentBlog->id) }}">
+                                                <a href="{{ route('blog-detail', $recentBlog->slug) }}">
                                                     <i
                                                         class="fas fa-calendar-alt"></i>{{ $recentBlog->created_at->format('F d, Y') }}
                                                 </a>
                                             </div>
                                             <h4 class="post-title">
                                                 <a class="text-inherit"
-                                                    href="{{ route('blog-detail', $recentBlog->id) }}">
+                                                    href="{{ route('blog-detail', $recentBlog->slug) }}">
                                                     {{ Str::limit($recentBlog->title, 50) }}
                                                 </a>
                                             </h4>

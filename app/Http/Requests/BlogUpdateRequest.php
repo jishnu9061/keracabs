@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class BlogUpdateRequest extends FormRequest
@@ -22,7 +23,8 @@ class BlogUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:255|unique:blogs',
+            'title' => 'required|string|max:255|unique:blogs,title',
+            'seo_title' => 'required|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'keywords' => 'nullable|string|max:255',
             'description' => 'required|string',

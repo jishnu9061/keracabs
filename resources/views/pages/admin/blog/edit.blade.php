@@ -33,6 +33,29 @@
                                     </div>
                                 </div>
 
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="mb-4">
+                                        <label for="slug" class="form-label">Seo Title</label>
+                                        <input class="form-control" type="text" name="seo_title"
+                                            value="{{ old('seo_title',$blog->seo_title) }}" id="slug">
+                                        @error('slug')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+
+                                <!-- Keywords Field -->
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="mb-4">
+                                        <label for="keywords" class="form-label">Keywords</label>
+                                        <input class="form-control" type="text" name="keywords" value="{{ old('keywords', $blog->keyword) }}" id="keywords">
+                                        @error('keywords')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+
                                 <!-- Image Field -->
                                 <div class="col-lg-6">
                                     <div class="mb-4">
@@ -54,21 +77,11 @@
                                         <p>No image available</p>
                                     </div>
                                 @endif
-
-                                <!-- Keywords Field -->
-                                <div class="col-lg-6 col-md-6">
-                                    <div class="mb-4">
-                                        <label for="keywords" class="form-label">Keywords</label>
-                                        <input class="form-control" type="text" name="keywords" value="{{ old('keywords', $blog->keyword) }}" id="keywords">
-                                        @error('keywords')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                </div>
-
+                                <br>
                                 <!-- Description Field -->
                                 <div class="col-lg-12">
                                     <div class="mb-4">
+                                        <br>
                                         <label for="description" class="form-label">Description</label>
                                         <textarea class="form-control" name="description" id="description">{{ old('description', $blog->description) }}</textarea>
                                         @error('description')
