@@ -34,23 +34,6 @@
                     <div class="invalid-feedback">Please enter a valid email address.</div>
                 </div>
                 <div class="form-group col-sm-6">
-                    <select class="form-control" name="vehicle" id="vehicle">
-                        <option value="">-- Select car --</option>
-                        <option value="Sedan">Sedan</option>
-                        <option value="Suv">Suv</option>
-                        <option value="Suv Premium">Suv Premium</option>
-                        <option value="12 TT A/C">12 TT A/C</option>
-                        <option value="17 TT A/C">17 TT A/C</option>
-                        <option value="26 TT A/C">26 TT A/C</option>
-                    </select>
-                    <div class="invalid-feedback">Please select a vehicle.</div>
-                </div>
-                <div class="form-group col-sm-6">
-                    <input type="text" class="form-control" name="vehicle_type" id="vehicle_type" placeholder="Type vehicle" />
-                    <i class="fal fa-car"></i>
-                    <div class="invalid-feedback">Type vehicle</div>
-                </div>
-                <div class="form-group col-sm-6">
                     <input type="date" class="form-control" name="start_date" id="start_date" placeholder="Start Date" />
                     <div class="invalid-feedback">Please select a start date.</div>
                 </div>
@@ -65,6 +48,22 @@
                 <div class="form-group col-sm-6">
                     <input type="time" class="form-control" name="end_time" id="end_time" placeholder="End Time" />
                     <div class="invalid-feedback">Please select an end time.</div>
+                </div>
+                <div class="form-group col-sm-6">
+                    <select class="form-control" name="vehicle" id="vehicle">
+                        <option value="">-- Select car --</option>
+                        <option value="Sedan">Sedan</option>
+                        <option value="Suv">Suv</option>
+                        <option value="Suv Premium">Suv Premium</option>
+                        <option value="12 TT A/C">12 TT A/C</option>
+                        <option value="17 TT A/C">17 TT A/C</option>
+                        <option value="26 TT A/C">26 TT A/C</option>
+                        <option value="Others">Others</option>
+                    </select>
+                </div>
+                <div class="form-group col-sm-6">
+                    <input type="text" class="form-control" name="vehicle_type" id="other_vehicle" style="display:none;" placeholder="Type vehicle" />
+                    <div class="invalid-feedback">Type vehicle</div>
                 </div>
                 <div class="form-group col-12">
                     <textarea placeholder="Write a Message...." name="message" id="message" class="form-control"></textarea>
@@ -174,6 +173,16 @@
                 $('[name="email"]').after('<div class="invalid-feedback">Please enter a valid email address</div>');
             }
 
+            // Check for 'Others' option and validate the 'other_vehicle' field
+            if ($('#vehicle').val() === 'Others') {
+                var otherVehicle = $('#other_vehicle').val().trim();
+                if (otherVehicle === "") {
+                    valid = false;
+                    $('#other_vehicle').addClass('is-invalid');
+                    $('#other_vehicle').after('<div class="invalid-feedback">Please specify your vehicle type</div>');
+                }
+            }
+
             return valid;
         }
 
@@ -181,5 +190,16 @@
             var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             return emailRegex.test(email);
         }
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('#vehicle').change(function() {
+            if ($(this).val() === 'Others') {
+                $('#other_vehicle').show();
+            } else {
+                $('#other_vehicle').hide();
+            }
+        });
     });
 </script>
