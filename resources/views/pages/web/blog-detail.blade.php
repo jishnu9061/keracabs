@@ -1,9 +1,5 @@
 
-@extends('pages.web.includes.header')
-
-@section('meta_title', $blog->title)
-@section('meta_key', $blog->keyword)
-@section('meta_description', $blog->description)
+@include('pages.web.includes.header')
 
 @section('content')
 <div class="breadcumb-wrapper" data-bg-src="{{ asset('home/img/abt.jpg') }}" data-overlay="title" data-opacity="4">

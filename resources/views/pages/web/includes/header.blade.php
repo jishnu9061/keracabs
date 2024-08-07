@@ -4,9 +4,9 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>@yield('meta_title', 'Keracabs')</title>
-    <meta name="keywords" content="@yield('meta_key', 'Default Key')" />
-    <meta name="description" content="@yield('meta_description', 'Default description')" />
+    <title>@isset($blog) {{ $blog->title }} @else Default Title @endisset</title>
+    <meta name="keywords" content="@isset($blog) {{ $blog->keyword }} @else Default Key @endisset" />
+    <meta name="description" content="@isset($blog) {{ $blog->description }} @else Default description @endisset" />
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no" />
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('home/img/bg/mini.png') }}" />
     <link rel="preconnect" href="https://fonts.googleapis.com/" />
