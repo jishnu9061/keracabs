@@ -25,6 +25,7 @@ class BlogUpdateRequest extends FormRequest
         return [
             'title' => 'required|string|max:255|unique:blogs,title',
             'seo_title' => 'required|string|max:255',
+            'image_alt' => 'required|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'keywords' => 'nullable|string|max:255',
             'description' => 'required|string',

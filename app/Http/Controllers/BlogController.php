@@ -29,7 +29,7 @@ class BlogController extends Controller
     public function index()
     {
         $path = $this->getView('admin.blog.index');
-        $blogs = Blog::select('id', 'title', 'image', 'created_at', 'description', 'blog_details', 'slug', 'keyword','seo_title')->get();
+        $blogs = Blog::select('id', 'title', 'image', 'created_at', 'description', 'blog_details', 'slug', 'keyword','seo_title','image_alt')->get();
         $para = ['blogs' => $blogs];
         $title = 'Blogs';
         return $this->renderView($path, $para, $title);
@@ -57,6 +57,7 @@ class BlogController extends Controller
             $blog = Blog::create([
                 'title' => $request->title,
                 'seo_title'=> $request->seo_title,
+                'image_alt' => $request->image_alt,
                 'keyword' => $request->keywords,
                 'description' => $request->description,
                 'blog_details' => $request->blog_details
@@ -97,9 +98,9 @@ class BlogController extends Controller
      */
     public function update(BlogUpdateRequest $request, Blog $blog)
     {
-        // dd($request->all());
         $blog->update([
             'title' => $request->title,
+            'image_alt' => $request->image_alt,
             'seo_title'=> $request->seo_title,
             'keyword' => $request->keywords,
             'description' => $request->description,

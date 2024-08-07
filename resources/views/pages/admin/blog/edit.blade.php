@@ -56,10 +56,20 @@
                                     </div>
                                 </div>
 
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="mb-4">
+                                        <label for="title" class="form-label">Alt image</label>
+                                        <input class="form-control" type="text" name="image_alt" value="{{ old('image_alt', $blog->image_alt) }}" id="title">
+                                        @error('image_alt')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+
                                 <!-- Image Field -->
                                 <div class="col-lg-6">
                                     <div class="mb-4">
-                                        <label for="image" class="form-label">Images</label>
+                                        <label for="image" class="form-label">Image</label>
                                         <input type="file" class="form-control" name="image" id="image">
                                         @error('image')
                                             <span class="text-danger">{{ $message }}</span>

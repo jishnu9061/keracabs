@@ -21,7 +21,7 @@
                                     <div class="blog-img">
                                         <a href="{{ route('blog-detail', $blog->slug) }}">
                                             <img src="{{ \App\Http\Helpers\BlogHelper::getBlogImagePath($blog->image) }}"
-                                                alt="Blog Image" />
+                                                alt="{{ $blog->image_alt }}" />
                                         </a>
                                     </div>
                                     <div class="blog-content">
@@ -58,7 +58,7 @@
                                         <div class="media-img">
                                             <a href="{{ route('blog-detail', $recentBlog->slug) }}">
                                                 <img src="{{ \App\Http\Helpers\BlogHelper::getBlogImagePath($recentBlog->image) }}"
-                                                    alt="Blog Image" />
+                                                    alt="{{ $recentBlog->image_alt }}" />
                                             </a>
                                         </div>
                                         <div class="media-body">

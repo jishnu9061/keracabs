@@ -19,7 +19,7 @@
                     <div class="th-blog blog-single style2">
                         <div class="blog-img"><img
                                 src="{{ \App\Http\Helpers\BlogHelper::getBlogImagePath($blog->image) }}"
-                                alt="Blog Image" /></div>
+                                alt="{{ $blog->image_alt }}" /></div>
                         <div class="blog-content">
                             <div class="blog-meta">
                                 <a href="javascript:;"><i
@@ -46,7 +46,7 @@
                                         <div class="media-img">
                                             <a href="{{ route('blog-detail', $post->slug) }}"><img
                                                     src="{{ \App\Http\Helpers\BlogHelper::getBlogImagePath($post->image) }}"
-                                                    alt="Blog Image" /></a>
+                                                    alt="{{ $post->image_alt }}" /></a>
                                         </div>
                                         <div class="media-body">
                                             <div class="recent-post-meta">

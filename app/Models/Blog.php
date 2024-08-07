@@ -18,6 +18,7 @@ class Blog extends Model
         'image',
         'description',
         'slug',
+        'image_alt',
         'keyword',
         'blog_details',
         'seo_title'

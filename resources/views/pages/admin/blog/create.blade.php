@@ -33,12 +33,12 @@
                                     </div>
                                 </div>
 
-                                <!-- Image Field -->
-                                <div class="col-lg-6">
+                                <div class="col-lg-6 col-md-6">
                                     <div class="mb-4">
-                                        <label for="image" class="form-label">Images</label>
-                                        <input type="file" class="form-control" name="image" id="image">
-                                        @error('image')
+                                        <label for="slug" class="form-label">Alt image title</label>
+                                        <input class="form-control" type="text" name="image_alt"
+                                            value="{{ old('image_alt') }}" id="slug">
+                                        @error('image_alt')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -63,6 +63,17 @@
                                         <input class="form-control" type="text" name="seo_title"
                                             value="{{ old('seo_title') }}" id="slug">
                                         @error('slug')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                 <!-- Image Field -->
+                                 <div class="col-lg-6">
+                                    <div class="mb-4">
+                                        <label for="image" class="form-label">Images</label>
+                                        <input type="file" class="form-control" name="image" id="image">
+                                        @error('image')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
