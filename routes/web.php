@@ -13,6 +13,7 @@ use App\Http\Controllers\Web\WebBookingController;
 use App\Http\Controllers\Web\WebContactController;
 use App\Http\Controllers\Web\DriverManageController;
 use App\Http\Controllers\AdminRegistrationController;
+use App\Http\Controllers\Web\SiteMapController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +36,7 @@ Route::post('/contact-mail', [ContactController::class, 'sendMail'])->name('send
 Route::get('/blog-detail/{slug}', [WebBlogController::class, 'blogDetailPage'])->name('blog-detail');
 Route::get('/bookings', [WebBookingController::class, 'index'])->name('bookings');
 Route::post('/confirm-booking', [WebBookingController::class, 'sendBooking'])->name('send-booking');
+Route::get('/site-map', [SiteMapController::class, 'index'])->name('site-map');
 
 
 Auth::routes();
