@@ -52,7 +52,7 @@ class DriverManageController extends Controller
         }
         $registrationData = $registration->toArray();
 
-        Mail::to('jishnuganesh27@gmail.com')->send(new DriverMail($registrationData));
+        Mail::to('keracabs7@gmail.com')->send(new DriverMail($registrationData));
         return Response::json(['success' => true]);
     }
 }

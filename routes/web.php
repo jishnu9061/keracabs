@@ -33,7 +33,6 @@ Route::get('/contacts', [WebContactController::class, 'index'])->name('contacts'
 Route::get('/driver', [DriverManageController::class, 'index'])->name('driver');
 Route::post('/send-registration', [DriverManageController::class, 'sendRegistration'])->name('send-registration');
 Route::post('/contact-mail', [ContactController::class, 'sendMail'])->name('send-mail');
-Route::get('/blog-detail/{slug}', [WebBlogController::class, 'blogDetailPage'])->name('blog-detail');
 Route::get('/bookings', [WebBookingController::class, 'index'])->name('bookings');
 Route::post('/confirm-booking', [WebBookingController::class, 'sendBooking'])->name('send-booking');
 Route::get('/site-map', [SiteMapController::class, 'index'])->name('site-map');
@@ -52,7 +51,7 @@ Route::group(['middleware' => ['auth:admin']], function () {
     Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('admin.logout');
     Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('admin.dashboard');
 
-    Route::group(['prefix' => 'blog', 'namespace' => 'Blog', 'as' => 'blog.'], function () {
+    Route::group(['prefix' => 'admin-blog', 'namespace' => 'Blog', 'as' => 'blog.'], function () {
         Route::get('/', [BlogController::class, 'index'])->name('index');
         Route::get('/create', [BlogController::class, 'create'])->name('create');
         Route::post('/store', [BlogController::class, 'store'])->name('store');
@@ -89,3 +88,5 @@ Route::group(['middleware' => ['auth:admin']], function () {
         Route::delete('/delete/{registration}', [AdminRegistrationController::class, 'delete'])->name('delete');
     });
 });
+
+Route::get('/{slug}', [WebBlogController::class, 'blogDetailPage'])->name('blog-detail');

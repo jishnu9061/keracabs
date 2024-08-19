@@ -53,7 +53,7 @@ class WebBookingController extends Controller
             'end_time' => $request->end_time,
             'vehicle_type' => $request->vehicle_type
         ]);
-        Mail::to('jishnuganesh27@gmail.com')->send(new BookingMail($booking));
+        Mail::to('keracabs7@gmail.com')->send(new BookingMail($booking));
         return Response::json(['success' => true]);
     }
 }

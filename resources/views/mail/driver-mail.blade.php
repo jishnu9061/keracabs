@@ -1,13 +1,13 @@
 <x-mail::message>
 # Registration Successful
 
-Dear {{ $registrationData['name'] }},
+Dear Admin,
 
-Thank you for registering. Here are your details:
+A new user has successfully registered. Here are the details:
 
 - **Name:** {{ $registrationData['name'] }}
 - **Phone Number:** {{ $registrationData['number'] }}
-- **Whatsapp Number:** {{ $registrationData['whatsapp_number'] }}
+- **WhatsApp Number:** {{ $registrationData['whatsapp_number'] }}
 - **Vehicle Type:** {{ $registrationData['vehicle_type'] }}
 - **Seating Capacity:** {{ $registrationData['seating_capacity'] }}
 - **Vehicle Number:** {{ $registrationData['vehicle_number'] }}
