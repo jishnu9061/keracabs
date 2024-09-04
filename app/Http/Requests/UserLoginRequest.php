@@ -26,4 +26,17 @@ class UserLoginRequest extends FormRequest
             'password' => 'required|string|min:6',
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'email.required' => 'The email field is required.',
+            'email.email' => 'The email must be a valid email address.',
+            'email.max' => 'The email may not be greater than 255 characters.',
+
+            'password.required' => 'The password field is required.',
+            'password.string' => 'The password must be a string.',
+            'password.min' => 'The password must be at least 6 characters.',
+        ];
+    }
 }

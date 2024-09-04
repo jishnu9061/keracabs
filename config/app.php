@@ -209,7 +209,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // 'ExampleClass' => App\Example\ExampleClass::class,
+        'AdminConstants' => App\Http\Constants\AdminConstants::class,
     ])->toArray(),
 
 ];

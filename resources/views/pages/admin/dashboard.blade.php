@@ -21,9 +21,9 @@
                     <div class="row align-items-center">
                         <div class="col-7">
                             <span class="text-muted mb-3 lh-2 d-block text-truncate"
-                                style="color: #eeeeee !important">Bookings</span>
-                            <h4 class="mb-3" style="color: #eeeeee !important">
-                                <span class="counter-value" data-target="{{ $counts['bookings'] }}">0</span>
+                                style="color: #EEEEEE !important;">Manager</span>
+                            <h4 class="mb-3" style="color: #EEEEEE !important;">
+                                <span class="counter-value" data-target="{{ $counts['manager']['total'] }}">0</span>k
                             </h4>
                         </div>
 
@@ -34,15 +34,12 @@
                         </div>
                     </div>
                     <div class="text-nowrap">
-                        <span class="ms-1 text-muted font-size-13" style="color: #eeeeee !important">Since last
-                            week</span>
+                        <span class="badge bg-success-subtle text-success">+{{ $counts['manager']['last_week'] }}</span>
+                        <span class="ms-1 text-muted font-size-13" style="color: #EEEEEE !important;">Since last week</span>
                     </div>
-                </div>
-                <!-- end card body -->
-            </div>
-            <!-- end card -->
-        </div>
-        <!-- end col -->
+                </div><!-- end card body -->
+            </div><!-- end card -->
+        </div><!-- end col -->
 
         <div class="col-xl-4 col-md-6">
             <!-- card -->
@@ -52,9 +49,9 @@
                     <div class="row align-items-center">
                         <div class="col-7">
                             <span class="text-muted mb-3 lh-2 d-block text-truncate"
-                                style="color: #eeeeee !important">Blogs</span>
-                            <h4 class="mb-3" style="color: #eeeeee !important">
-                                <span class="counter-value" data-target="{{ $counts['blogs'] }}">0</span>
+                                style="color: #EEEEEE !important;">Devices</span>
+                            <h4 class="mb-3" style="color: #EEEEEE !important;">
+                                <span class="counter-value" data-target="{{ $counts['device']['total'] }}">0</span>
                             </h4>
                         </div>
                         <div class="col-5">
@@ -64,15 +61,12 @@
                         </div>
                     </div>
                     <div class="text-nowrap">
-                        <span class="ms-1 text-muted font-size-13" style="color: #eeeeee !important">Since last
-                            week</span>
+                        <span class="badge bg-danger-subtle text-danger">+{{ $counts['device']['last_week'] }} </span>
+                        <span class="ms-1 text-muted font-size-13" style="color: #EEEEEE !important;">Since last week</span>
                     </div>
-                </div>
-                <!-- end card body -->
-            </div>
-            <!-- end card -->
-        </div>
-        <!-- end col-->
+                </div><!-- end card body -->
+            </div><!-- end card -->
+        </div><!-- end col-->
 
         <div class="col-xl-4 col-md-6">
             <!-- card -->
@@ -82,9 +76,9 @@
                     <div class="row align-items-center">
                         <div class="col-7">
                             <span class="text-muted mb-3 lh-2 d-block text-truncate"
-                                style="color: #eeeeee !important">Contact</span>
-                            <h4 class="mb-3" style="color: #eeeeee !important">
-                                <span class="counter-value" data-target="{{ $counts['contacts'] }}">0</span>
+                                style="color: #EEEEEE !important;">Routes</span>
+                            <h4 class="mb-3" style="color: #EEEEEE !important;">
+                                <span class="counter-value" data-target="{{ $counts['route']['total'] }}">0</span>M
                             </h4>
                         </div>
                         <div class="col-5">
@@ -94,47 +88,37 @@
                         </div>
                     </div>
                     <div class="text-nowrap">
-                        <span class="ms-1 text-muted font-size-13" style="color: #eeeeee !important">Since last
-                            week</span>
+                        <span class="badge bg-success-subtle text-success">+ {{ $counts['route']['last_week'] }}</span>
+                        <span class="ms-1 text-muted font-size-13" style="color: #EEEEEE !important;">Since last week</span>
                     </div>
-                </div>
-                <!-- end card body -->
-            </div>
-            <!-- end card -->
-        </div>
-        <!-- end col -->
-    </div>
-    <!-- end row-->
-
+                </div><!-- end card body -->
+            </div><!-- end card -->
+        </div><!-- end col -->
+    </div><!-- end row-->
     <div class="row">
-        <div class="col-xl-12">
+        <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="mb-3">Booking</h4>
+                    <h3>Manager List</h3>
                     <div class="table-responsive mb-0" data-pattern="priority-columns">
-                        <table id="datatable" class="table table-bordered nowrap w-100">
+                        <table id="datatable" class="table table-bordered   nowrap w-100">
                             <thead>
                                 <tr>
                                     <th>Sl.No</th>
-                                    <th>Date</th>
                                     <th>Name</th>
-                                    <th>Phone No</th>
-                                    <th>Email</th>
-                                    <th>Vehicle</th>
-                                    <th>Message</th>
+                                    <th>Username</th>
+                                    <th>Password</th>
+                                    <th>Contact</th>
                                 </tr>
                             </thead>
-
                             <tbody>
-                                @foreach ($bookings as $booking)
+                                @foreach ($managers as $manager)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $booking->created_at->format('m/d/Y') }}</td>
-                                        <td> {{ $booking->name }}</td>
-                                        <td>{{ $booking->phone }}</td>
-                                        <td>{{ $booking->email }}</td>
-                                        <td>{{ $booking->vehicle }}</td>
-                                        <td>{{ $booking->message }}</td>
+                                        <td><a href="addDevice.html">{{ $manager->name }}</a></td>
+                                        <td>{{ $manager->user_name }}</td>
+                                        <td>{{ $manager->password }}</td>
+                                        <td>{{ $manager->contact }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>

@@ -2,18 +2,11 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\BlogController;
-use App\Http\Controllers\SliderController;
-use App\Http\Controllers\BookingController;
-use App\Http\Controllers\ContactController;
-use App\Http\Controllers\Web\HomeController;
-use App\Http\Controllers\Web\AboutController;
-use App\Http\Controllers\Web\WebBlogController;
-use App\Http\Controllers\Web\WebBookingController;
-use App\Http\Controllers\Web\WebContactController;
-use App\Http\Controllers\Web\DriverManageController;
-use App\Http\Controllers\AdminRegistrationController;
-use App\Http\Controllers\Web\SiteMapController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Admin\DeviceController;
+use App\Http\Controllers\Admin\AdminRouteController;
+use App\Http\Controllers\Admin\AdminDeviceController;
+use App\Http\Controllers\Admin\AdminManagerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,17 +19,7 @@ use App\Http\Controllers\Web\SiteMapController;
 |
 */
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/about', [AboutController::class, 'index'])->name('about');
-Route::get('/blogs', [WebBlogController::class, 'index'])->name('blogs');
-Route::get('/contacts', [WebContactController::class, 'index'])->name('contacts');
-Route::get('/driver', [DriverManageController::class, 'index'])->name('driver');
-Route::post('/send-registration', [DriverManageController::class, 'sendRegistration'])->name('send-registration');
-Route::post('/contact-mail', [ContactController::class, 'sendMail'])->name('send-mail');
-Route::get('/bookings', [WebBookingController::class, 'index'])->name('bookings');
-Route::post('/confirm-booking', [WebBookingController::class, 'sendBooking'])->name('send-booking');
-Route::get('/site-map', [SiteMapController::class, 'index'])->name('site-map');
-
+Route::get('/', [LoginController::class, 'showLoginForm'])->name('login');
 
 Auth::routes();
 
@@ -49,44 +32,40 @@ Route::post('/do-login', [App\Http\Controllers\Auth\LoginController::class, 'log
 
 Route::group(['middleware' => ['auth:admin']], function () {
     Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('admin.logout');
-    Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin.dashboard');
 
-    Route::group(['prefix' => 'admin-blog', 'namespace' => 'Blog', 'as' => 'blog.'], function () {
-        Route::get('/', [BlogController::class, 'index'])->name('index');
-        Route::get('/create', [BlogController::class, 'create'])->name('create');
-        Route::post('/store', [BlogController::class, 'store'])->name('store');
-        Route::get('/edit/{blog}', [BlogController::class, 'edit'])->name('edit');
-        Route::put('/update/{blog}', [BlogController::class, 'update'])->name('update');
-        Route::delete('/delete/{blog}', [BlogController::class, 'delete'])->name('delete');
+    // Manager
+    Route::group(['prefix' => 'manager', 'namespace' => 'Manager', 'as' => 'manager.'], function () {
+        Route::get('/', [AdminManagerController::class, 'index'])->name('index');
+        Route::post('/store', [AdminManagerController::class, 'store'])->name('store');
+        Route::get('/edit/{manager}', [AdminManagerController::class, 'edit'])->name('edit');
+        Route::put('/update/{manager}', [AdminManagerController::class, 'update'])->name('update');
+        Route::delete('/delete/{manager}', [AdminManagerController::class, 'delete'])->name('destroy');
     });
 
-    Route::group(['prefix' => 'booking', 'namespace' => 'Booking', 'as' => 'booking.'], function () {
-        Route::get('/', [BookingController::class, 'index'])->name('index');
-        Route::get('/create', [BookingController::class, 'create'])->name('create');
-        Route::post('/store', [BookingController::class, 'store'])->name('store');
-        Route::get('/edit/{booking}', [BookingController::class, 'edit'])->name('edit');
-        Route::post('/update/{booking}', [BookingController::class, 'update'])->name('update');
-        Route::delete('/delete/{booking}', [BookingController::class, 'delete'])->name('delete');
+    // Manager device
+    Route::group(['prefix' => 'manager-device', 'namespace' => 'Manager-Device', 'as' => 'manager-device.'], function () {
+        Route::get('/{manager}', [AdminDeviceController::class, 'index'])->name('index');
+        Route::post('/store', [AdminDeviceController::class, 'store'])->name('store');
+        Route::get('/edit/{device}', [AdminDeviceController::class, 'edit'])->name('edit');
+        Route::put('/update/{device}', [AdminDeviceController::class, 'update'])->name('update');
+        Route::delete('/delete/{device}', [AdminDeviceController::class, 'delete'])->name('destroy');
     });
 
-    Route::group(['prefix' => 'slider', 'namespace' => 'Slider', 'as' => 'slider.'], function () {
-        Route::get('/', [SliderController::class, 'index'])->name('index');
-        Route::get('/create', [SliderController::class, 'create'])->name('create');
-        Route::post('/store', [SliderController::class, 'store'])->name('store');
-        Route::get('/edit/{banner}', [SliderController::class, 'edit'])->name('edit');
-        Route::post('/update/{banner}', [SliderController::class, 'update'])->name('update');
-        Route::delete('/delete/{banner}', [SliderController::class, 'delete'])->name('delete');
+    // Device
+    Route::group(['prefix' => 'device', 'namespace' => 'Device', 'as' => 'device.'], function () {
+        Route::get('/', [DeviceController::class, 'index'])->name('index');
+        Route::delete('/delete/{device}', [DeviceController::class, 'delete'])->name('destroy');
     });
 
-    Route::group(['prefix' => 'contact', 'namespace' => 'Contact', 'as' => 'contact.'], function () {
-        Route::get('/', [ContactController::class, 'index'])->name('index');
-        Route::delete('/delete/{contact}', [ContactController::class, 'delete'])->name('delete');
+    // Route
+    Route::group(['prefix' => 'route', 'namespace' => 'Route', 'as' => 'route.'], function () {
+        Route::get('/', [AdminRouteController::class, 'index'])->name('index');
+        Route::post('/store', [AdminRouteController::class, 'store'])->name('store');
+        Route::get('/edit/{route}', [AdminRouteController::class, 'edit'])->name('edit');
+        Route::put('/update/{route}', [AdminRouteController::class, 'update'])->name('update');
+        Route::delete('/delete/{route}', [AdminRouteController::class, 'delete'])->name('destroy');
     });
 
-    Route::group(['prefix' => 'register', 'namespace' => 'Register', 'as' => 'register.'], function () {
-        Route::get('/', [AdminRegistrationController::class, 'index'])->name('index');
-        Route::delete('/delete/{registration}', [AdminRegistrationController::class, 'delete'])->name('delete');
-    });
 });
 
-Route::get('/{slug}', [WebBlogController::class, 'blogDetailPage'])->name('blog-detail');

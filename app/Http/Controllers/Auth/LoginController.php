@@ -43,6 +43,7 @@ class LoginController extends Controller
 
     public function login(UserLoginRequest $request)
     {
+        // dd('hi');
         $credentials = $request->only('email', 'password');
 
         if (Auth::guard('admin')->attempt(['email' => $credentials['email'], 'password' => $credentials['password']])) {
@@ -58,4 +59,5 @@ class LoginController extends Controller
         Auth::logout();
         return redirect()->route('login');
     }
+
 }

@@ -3,12 +3,12 @@
         <div class="d-flex">
             <!-- LOGO -->
             <div class="navbar-brand-box">
-                <a href="{{ route('admin.dashboard') }}" class="logo logo-dark">
+                <a href="index.html" class="logo logo-dark">
                     <span class="logo-sm">
-                        <img src="{{ asset('admin/images/fav.png') }}" alt="" height="20">
+                        <img src="{{ asset('admin/images/logo.png') }}" alt="" height="20">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{ asset('admin/images/logo.png') }}" alt="" width="140">
+                        <img src="{{ asset('admin/images/logo.png') }}" alt="" height="54">
                     </span>
                 </a>
 
@@ -24,15 +24,13 @@
         <div class="d-flex">
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item bg-light-subtle border-start border-end"
-                    id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false">
-                    <img class="rounded-circle header-profile-user"
-                        src="{{ asset('admin/images/users/avatar-1.jpg') }}" alt="Header Avatar">
+                    id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img class="rounded-circle header-profile-user" src="{{ asset('admin/images/users/avatar-1.jpg') }}"
+                        alt="Header Avatar">
                     <span class="d-none d-xl-inline-block ms-1 fw-medium">Admin</span>
                     <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-end">
-                    <!-- item -->
                     <form id="logout-form" action="{{ route('admin.logout') }}" method="POST"
                         style="display: none;">
                         @csrf
@@ -42,7 +40,6 @@
                         <i class="mdi mdi-logout font-size-16 align-middle me-1"></i> Logout
                     </a>
                 </div>
-
             </div>
 
         </div>

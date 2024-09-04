@@ -18,7 +18,7 @@ var columnDatalabelColors = getChartColorsArray("#column_chart_datalabel"),
         return e + "%";
       },
       offsetY: -22,
-      style: { fontSize: "12px", colors: ["#0fb390"] },
+      style: { fontSize: "12px", colors: ["#2222ca"] },
     },
     series: [
       {
@@ -27,7 +27,7 @@ var columnDatalabelColors = getChartColorsArray("#column_chart_datalabel"),
       },
     ],
     colors: columnDatalabelColors,
-    grid: { borderColor: "#0fb390" },
+    grid: { borderColor: "#2222ca" },
     xaxis: {
       categories: [
         "Jan",
@@ -76,7 +76,7 @@ var columnDatalabelColors = getChartColorsArray("#column_chart_datalabel"),
       floating: !0,
       offsetY: 330,
       align: "center",
-      style: { color: "#0fb390", fontWeight: "500" },
+      style: { color: "#2222ca", fontWeight: "500" },
     },
   };
 (chart = new ApexCharts(

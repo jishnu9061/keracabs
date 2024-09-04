@@ -17,7 +17,7 @@ var columnDatalabelColors = getChartColorsArray("#column_chart_datalabel"),
         return e + "";
       },
       offsetY: -22,
-      style: { fontSize: "10px", colors: ["#0fb390"] },
+      style: { fontSize: "10px", colors: ["#2222ca"] },
     },
     series: [
       {
@@ -29,7 +29,7 @@ var columnDatalabelColors = getChartColorsArray("#column_chart_datalabel"),
       },
     ],
     colors: columnDatalabelColors,
-    grid: { borderColor: "#0fb390" },
+    grid: { borderColor: "#2222ca" },
     xaxis: {
       categories: [
         "Operating Income",
@@ -56,8 +56,8 @@ var columnDatalabelColors = getChartColorsArray("#column_chart_datalabel"),
         fill: {
           type: "gradient",
           gradient: {
-            colorFrom: "#0fb390",
-            colorTo: "#0fb390",
+            colorFrom: "#2222ca",
+            colorTo: "#2222ca",
             stops: [0, 100],
             opacityFrom: 0.4,
             opacityTo: 0.5,
