@@ -5,17 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class RouteStop extends Model
+class Stage extends Model
 {
     use HasFactory;
 
-    protected $table = 'route_stops';
+    protected $table = 'stages';
 
     protected $fillable = [
-        'stop_name',
-        'stop_sequence',
         'route_id',
-        'price'
+        'stage_data'
     ];
 
     public static function getTableName()

@@ -5,17 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class RouteStop extends Model
+class StudentFee extends Model
 {
     use HasFactory;
 
-    protected $table = 'route_stops';
+    protected $table = 'student_fees';
 
     protected $fillable = [
-        'stop_name',
-        'stop_sequence',
-        'route_id',
-        'price'
+        'price_date',
     ];
 
     public static function getTableName()

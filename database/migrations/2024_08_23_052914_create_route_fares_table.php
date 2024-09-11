@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('route_fares', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('route_id')->constrained()->onDelete('cascade');
+            $table->foreignId('route_stop_id')->constrained()->onDelete('cascade');
             $table->decimal('fare_amount', 10, 2);
-            $table->enum('fare_type', ['adult', 'child', 'senior', 'student']);
+            $table->tinyInteger('type')->nullable();
             $table->timestamps();
         });
     }

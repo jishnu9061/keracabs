@@ -1,12 +1,13 @@
 <?php
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Passport\HasApiTokens;
 
-class Manager extends Model
+class Manager extends Authenticatable
 {
-    use HasFactory;
+    use HasApiTokens, Notifiable;
 
     protected $table = 'managers';
 
@@ -16,18 +17,6 @@ class Manager extends Model
         'password',
         'contact'
     ];
-
-    public function devices()
-    {
-        return $this->hasMany(Device::class);
-    }
-
-    public function routes()
-    {
-        return $this->belongsToMany(Route::class, 'manager_device_routes')
-                    ->withPivot('device_id')
-                    ->withTimestamps();
-    }
 
     public static function getTableName()
     {

@@ -102,4 +102,19 @@ class AdminDeviceController extends Controller
         ToastrHelper::success('Device deleted successfully');
         return Response::json(['success' => true]);
     }
+
+    public function managerAssign(Request $request)
+    {
+        $managerDevice =Device::find($request->entity_id);
+        $managerDevice->route_id = $request->route_id;
+        $managerDevice->save();
+        return redirect()->route('manager-device.index', $managerDevice->manager_id);
+    }
+
+    public function resetDevice(Device $device)
+    {
+        $device->route_id = null;
+        $device->save();
+        return redirect()->back();
+    }
 }

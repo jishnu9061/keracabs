@@ -45,8 +45,9 @@
                                             <h5>{{ $user->header_one }}</h5>
                                         </td>
                                         <td>
-                                            <a class="btn btn-outline-secondary btn-sm edit" title="Route Assign"
-                                                data-bs-toggle="modal" data-bs-target="#routeModal">
+                                            <a class="btn btn-outline-secondary btn-sm edit route-assign-btn" title="Route Assign"
+                                                data-bs-toggle="modal" data-bs-target="#routeModal"
+                                                data-user-id="{{ $user->id }}">
                                                 <i class="fas fa-eye"></i>
                                             </a>
                                         </td>
@@ -57,7 +58,7 @@
                                             <a data-href="{{ route('manager-device.destroy', $user->id) }}" class="btn btn-outline-secondary btn-sm delete-btn" title="Delete">
                                                 <i class="fas fa-trash-alt"></i>
                                             </a>
-                                            <a class="btn btn-outline-secondary btn-md edit">
+                                            <a href="#" data-href="{{ route('manager-device.reset', $user->id) }}" class="btn btn-outline-secondary btn-md reset-devices">
                                                 Reset Devices
                                             </a>
                                         </td> <!-- Action -->
@@ -70,42 +71,38 @@
             </div>
         </div>
     </div>
-    <div class="modal fade bs-example-modal-center" id="routeModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="routeModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Assign route</h5>
+                    <h5 class="modal-title">Assign Route</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="row align-items-center">
-                        <form novalidate='novalidate'>
-                            <div class="row align-items-center">
-                                <div class="col-lg-12 col-md-12">
-                                    <div class="mb-3">
-                                        <label for="choices-multiple-default"
-                                            class="form-label font-size-16 text-muted">Select Route</label>
-                                            <select class="form-control" data-trigger="" name="route" id="choices-multiple-default">
-                                                @foreach($routes as $route)
-                                                    <option value="{{ $route->id }}">{{ $route->route_from }} - {{ $route->route_to }}</option>
-                                                @endforeach
-                                            </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+                    <form id="assignRouteForm" method="POST" action="{{ route('manager-device.assign') }}">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="route-select" class="form-label font-size-16 text-muted">Select Route</label>
+                            <select class="form-control" name="route_id" id="route-select">
+                                @foreach($routes as $route)
+                                    <option value="{{ $route->id }}">{{ $route->route_from }} - {{ $route->route_to }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <input type="hidden" name="entity_id" id="entityId"> <!-- Hidden input to store the user ID -->
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Submit</button>
+                    <button type="button" class="btn btn-primary" id="submitRoute">Submit</button>
                 </div>
             </div>
         </div>
     </div>
     <div class="modal fade bs-example-modal-center" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <form id="addDeviceForm">
+            <form id="addDeviceForm" method="POST" action="{{ route('manager-device.store') }}" enctype="multipart/form-data">
+                @csrf
                 <input type="hidden" name="manager_id" value="{{ $manager->id }}">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -197,102 +194,77 @@
 </script>
 <script src="{{ asset('admin/libs/jquery/jquery.min.js') }}"></script>
 <!-- SweetAlert2 -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
+    $(document).on('click', '.route-assign-btn', function() {
+        var userId = $(this).data('user-id');
+        $('#entityId').val(userId);
+    });
+
     $(document).ready(function() {
-        var App = {
-            initialize: function() {
-                // Handle form submission
-                $('#addDeviceForm').on('submit', function(e) {
-                    e.preventDefault();
-                    var formData = new FormData(this);
-                    App.submitForm(formData);
-                });
+        $('#submitRoute').on('click', function() {
+            $('#assignRouteForm').submit();
+        });
 
-                // Handle delete button click
-                $(document).on('click', '.delete-btn', function(e) {
-                    e.preventDefault();
-                    var row = $(this).closest('tr');
-                    var url = $(this).data('href');
-                    App.deleteItem(row, url);
-                });
-            },
-            submitForm: function(formData) {
-                $.ajax({
-                    url: '{{ route('manager-device.store') }}',
-                    method: 'POST',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function(data) {
-                        if (data.success) {
-                            $('#exampleModal').modal('hide');
-                            location.reload();
-                        } else {
-                            $('.form-error').remove();
-                            $.each(data.errors, function(key, value) {
-                                $('#' + key).after(
-                                    '<div class="text-danger form-error">' +
-                                    value + '</div>');
-                            });
-                        }
-                    },
-                    error: function(data) {
-                        if (data.status === 422) {
-                            $('.form-error').remove();
-                            var errors = data.responseJSON.errors;
-                            $.each(errors, function(key, value) {
-                                $('#' + key).after(
-                                    '<div class="text-danger form-error">' +
-                                    value[0] + '</div>');
-                            });
-                        } else {
-                            // Swal.fire('Error!', 'Something went wrong.', 'error');
-                        }
-                    }
-                });
-            },
-            deleteItem: function(row, url) {
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You want to delete this device!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Yes, delete it!',
-                    confirmButtonColor: '#0fb390'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            url: url,
-                            method: 'DELETE',
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                                    'content')
-                            },
-                            success: function(data) {
-                                if (data.success) {
-                                    row.remove();
-                                    Swal.fire('Deleted!',
-                                        'The manager has been deleted.',
-                                        'success');
-                                } else {
-                                    Swal.fire('Error!', data.message, 'error');
-                                }
-                            },
-                            error: function(data) {
-                                console.log(data);
-                                Swal.fire('Error!', 'Something went wrong.',
-                                    'error');
-                            }
-                        });
-                    }
-                });
-            }
-        };
-
-        App.initialize();
+        $(document).on('click', '.delete-btn', function(e) {
+            e.preventDefault();
+            var href = $(this).data('href');
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = href;
+                }
+            });
+        });
     });
 </script>
+<script>
+    $(document).ready(function() {
+        $('.reset-devices').on('click', function(e) {
+            e.preventDefault();
+            var url = $(this).data('href');
+
+            if (confirm('Are you sure you want to reset the devices for this user?')) {
+                window.location.href = url;
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+    $('#addDeviceForm').on('submit', function(e) {
+        e.preventDefault(); // Prevent default form submission
+
+        var formData = new FormData(this);
+
+        $.ajax({
+            url: "{{ route('manager-device.store') }}",
+            method: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                // Handle success response (e.g., close modal, show a success message)
+                $('#exampleModal').modal('hide');
+                alert("Device added successfully!");
+                location.reload(); // Optional: Reload the page to see the updated list
+            },
+            error: function(xhr) {
+                // Handle error response and display validation errors
+                var errors = xhr.responseJSON.errors;
+                $('#error-name').text(errors.name);
+                $('#error-password').text(errors.password);
+                $('#error-logo').text(errors.logo);
+            }
+        });
+    });
+});
+
+    </script>

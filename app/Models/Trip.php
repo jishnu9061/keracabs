@@ -5,17 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class RouteStop extends Model
+class Trip extends Model
 {
     use HasFactory;
 
-    protected $table = 'route_stops';
+    protected $table = 'trips';
 
     protected $fillable = [
-        'stop_name',
-        'stop_sequence',
-        'route_id',
-        'price'
+        'trip_name',
+        'start_date',
+        'start_time',
+        'end_date',
+        'end_time',
+        'full_ticket',
+        'half_ticket',
+        'student_ticket',
+        'language_ticket',
+        'physical_ticket'
     ];
 
     public static function getTableName()

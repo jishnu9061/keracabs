@@ -16,8 +16,6 @@ return new class extends Migration
             $table->foreignId('route_id')->constrained()->onDelete('cascade');
             $table->string('stop_name');
             $table->unsignedInteger('stop_sequence');
-            $table->decimal('latitude', 10, 8)->nullable();
-            $table->decimal('longitude', 11, 8)->nullable();
             $table->timestamps();
         });
     }

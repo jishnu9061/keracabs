@@ -29,7 +29,7 @@
                                 @foreach ($routes as $route)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td><a href="stages.html">{{ $route->route_from }} - {{ $route->route_to }}</a></td>
+                                        <td><a href="{{ route('stop.index',$route->id) }}">{{ $route->route_from }} - {{ $route->route_to }}</a></td>
                                         <td> <a href="{{ route('route.edit',$route->id) }}" class="btn btn-outline-secondary btn-sm edit" title="Edit">
                                                 <i class="fas fa-pencil-alt"></i>
                                             </a>

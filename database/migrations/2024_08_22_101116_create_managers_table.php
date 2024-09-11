@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('managers', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('username')->unique();
-            $table->string('password');
-            $table->string('logo')->nullable();
+            $table->string('name',255);
+            $table->string('username',255)->unique();
+            $table->string('password',255);
+            $table->string('logo',255)->nullable();
             $table->text('additional_info')->nullable();
             $table->timestamps();
         });

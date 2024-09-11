@@ -115,7 +115,7 @@
                                 @foreach ($managers as $manager)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td><a href="addDevice.html">{{ $manager->name }}</a></td>
+                                        <td><a href="{{ route('manager-device.index',$manager->id) }}">{{ $manager->name }}</a></td>
                                         <td>{{ $manager->user_name }}</td>
                                         <td>{{ $manager->password }}</td>
                                         <td>{{ $manager->contact }}</td>

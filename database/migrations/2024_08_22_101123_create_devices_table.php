@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('devices', function (Blueprint $table) {
             $table->id();
             $table->foreignId('manager_id')->constrained('managers')->onDelete('cascade');
-            $table->string('device_name');
-            $table->string('serial_number');
-            $table->string('assign_route')->nullable();
+            $table->string('device_name',255);
+            $table->string('serial_number',255);
+            $table->string('assign_route',255)->nullable();
             $table->timestamps();
         });
     }
