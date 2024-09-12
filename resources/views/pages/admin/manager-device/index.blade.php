@@ -33,7 +33,7 @@
                                 @foreach ($devices as $index => $user)
                                     <tr>
                                         <td>{{ $index + 1 }}.</td>
-                                        <td><a href="javascript:;">{{ $user->user_name }}</a></td>
+                                        <td><a href="{{ route('manager-device.list',$user->id) }}">{{ $user->user_name }}</a></td>
                                         <td>{{ $user->password }}</td>
                                         <td>
                                             <a href="{{ Storage::url('device/' . $user->logo) }}" class="image-popup">

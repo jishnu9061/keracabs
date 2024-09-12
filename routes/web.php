@@ -58,6 +58,8 @@ Route::group(['middleware' => ['auth:admin']], function () {
         Route::get('/reset/{device}', [AdminDeviceController::class, 'resetDevice'])->name('reset');
         Route::put('/update/{device}', [AdminDeviceController::class, 'update'])->name('update');
         Route::delete('/delete/{device}', [AdminDeviceController::class, 'delete'])->name('destroy');
+        Route::get('/assign-list/{device}', [AdminDeviceController::class, 'assignList'])->name('list');
+        Route::delete('/delete-assign/{deviceRouteAssignment}', [AdminDeviceController::class, 'destroy'])->name('assign-delete');
     });
 
     // Device

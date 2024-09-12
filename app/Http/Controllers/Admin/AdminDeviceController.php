@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Response;
 use App\Http\Requests\DeviceStoreRequest;
 use App\Http\Requests\DeviceUpdateRequest;
 use App\Http\Helpers\Utilities\ToastrHelper;
+use App\Models\DeviceRouteAssignment;
 
 class AdminDeviceController extends Controller
 {
@@ -122,5 +123,26 @@ class AdminDeviceController extends Controller
         $device->route_id = null;
         $device->save();
         return redirect()->back();
+    }
+
+    public function assignList(Request $request, Device $device)
+    {
+
+        $path = $this->getView('admin.route.assign-route');
+        $routes = DB::table('device_route_assignments as da')
+            ->join('routes as r', 'da.route_id', '=', 'r.id')
+            ->where('da.device_id', $device->id)
+            ->select('r.id as route_id', 'r.route_from', 'r.route_to', 'r.created_at', 'r.updated_at','da.id')
+            ->get();
+        $para = ['routes' => $routes];
+        $title = 'Edit Manager';
+        return $this->renderView($path, $para, $title);
+    }
+
+    public function destroy(DeviceRouteAssignment $deviceRouteAssignment)
+    {
+        $deviceRouteAssignment->delete();
+        ToastrHelper::success('Device deleted successfully');
+        return Response::json(['success' => true]);
     }
 }

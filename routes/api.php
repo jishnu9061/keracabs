@@ -22,5 +22,6 @@ Route::group(['namespace' => 'Api', 'name' => 'api'], function () {
         Route::get('home', [AuthController::class, 'homePage']);
         Route::post('get-route', [RouteController::class, 'getDeviceRoute']);
         Route::post('get-stages', [RouteController::class, 'getStages']);
+        Route::post('logout', [AuthController::class, 'logOut']);
     });
 });
