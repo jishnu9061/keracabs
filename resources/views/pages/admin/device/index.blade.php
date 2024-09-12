@@ -74,15 +74,6 @@
         </div> <!-- end col -->
     </div> <!-- end row -->
 
-    <div class="mt-4">
-        <h5 class="font-size-14 mb-3">Multiple select input</h5>
-
-        <div class="row">
-
-
-
-        </div> <!-- container-fluid -->
-    </div>
     <!-- End Page-content -->
 
     </div>
@@ -108,7 +99,7 @@
                         @csrf
                         <div class="mb-3">
                             <label for="route-select" class="form-label font-size-16 text-muted">Select Route</label>
-                            <select class="form-control" name="route_id" id="route-select">
+                            <select class="form-control" name="route_id[]" id="route-select" multiple>
                                 @foreach ($routes as $route)
                                     <option value="{{ $route->id }}">{{ $route->route_from }} - {{ $route->route_to }}
                                     </option>

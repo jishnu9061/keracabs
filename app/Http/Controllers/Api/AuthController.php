@@ -19,26 +19,20 @@ class AuthController extends ApiBaseController
             return $this->sendError('Invalid data', $validator->errors()->toArray());
         } else {
             $credentials = $request->only('user_name', 'password');
-            if (Auth::guard('manager')->attempt($credentials)) {
-                $manager = Auth::guard('manager')->user();
+            if (Auth::guard('device')->attempt($credentials)) {
+                $device = Auth::guard('device')->user();
 
-                $token = $manager->createToken('Manager API Token')->accessToken;
+                $token = $device->createToken('Device API Token')->accessToken;
 
                 return response()->json([
                     'status' => true,
                     'message' => 'Login successful',
                     'token' => $token,
-                    'manager' => $manager
+                    'manager' => $device
                 ], 200);
             } else {
                 return $this->sendError('Invalid username or password', $validator->errors()->toArray());
             }
         }
     }
-
-    public function homePage()
-    {
-        dd('hi');
-    }
 }
-

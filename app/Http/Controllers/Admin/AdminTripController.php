@@ -87,11 +87,11 @@ class AdminTripController extends Controller
             'trips.created_at',
             'trips.total_expense',
             'trips.net_total',
-            'trips.total_amount',
             DB::raw('(full_ticket + half_ticket + student_ticket + language_ticket + physical_ticket) as total_ticket'),
             'stages.stage_data',
             'trips.stage_id',
-            'trips.stop_id'
+            'trips.stop_id',
+            'trips.start_id' // Assuming you have this column
         )
             ->join('stages', 'trips.stage_id', '=', 'stages.id');
 
@@ -116,24 +116,38 @@ class AdminTripController extends Controller
             $stageData = $trip->stage_data;
             $decodedStageData = json_decode($stageData, true);
             $stopId = $trip->stop_id;
+            $startId = $trip->start_id;
 
+            $startPrice = 0;
             $stopPrice = 0;
 
+            // Get the last price for stop_id
             if (isset($decodedStageData[$stopId])) {
                 $stage = $decodedStageData[$stopId];
                 $prices = $stage['prices'];
-                // Get the last price from the prices array
                 if (!empty($prices)) {
-                    $stopPrice = end($prices); // This gets the last price in the array
+                    $stopPrice = end($prices); // Last price
                 }
             }
-            // dd($stopPrice);
-            // Update totals based on dynamic price
-            $totalFullTicket += $trip->full_ticket * $stopPrice;
-            $totalHalfTicket += $trip->half_ticket * $stopPrice * 0.5;
-            $totalStudentTicket += $trip->student_ticket * $stopPrice * 0.3;
-            $totalLanguageTicket += $trip->language_ticket * $stopPrice * 0.3;
-            $totalPhysicalTicket += $trip->physical_ticket * $stopPrice * 0.3;
+
+            // Get the first price for start_id
+            if (isset($decodedStageData[$startId])) {
+                $stage = $decodedStageData[$startId];
+                $prices = $stage['prices'];
+                if (!empty($prices)) {
+                    $startPrice = end($prices); // First price
+                }
+            }
+
+            // Calculate the price difference between start and stop stages
+            $priceDifference = $stopPrice - $startPrice;
+
+            // Update totals based on dynamic price difference
+            $totalFullTicket += $trip->full_ticket ;
+            $totalHalfTicket += $trip->half_ticket ;
+            $totalStudentTicket += $trip->student_ticket;
+            $totalLanguageTicket += $trip->language_ticket;
+            $totalPhysicalTicket += $trip->physical_ticket;
         }
 
         // Calculate sums
@@ -163,100 +177,114 @@ class AdminTripController extends Controller
         return $this->renderView($path, $para, $title);
     }
 
+
     public function fareReport(DashboardService $dashboardService, Request $request)
-{
-    $path = $this->getView('admin.trip.fare');
+    {
+        $path = $this->getView('admin.trip.fare');
 
-    // Query to fetch trip data with stage data
-    $tripsQuery = Trip::select(
-        'trips.id',
-        'trips.trip_name',
-        'trips.start_date',
-        'trips.start_time',
-        'trips.end_date',
-        'trips.end_time',
-        'trips.full_ticket',
-        'trips.half_ticket',
-        'trips.student_ticket',
-        'trips.language_ticket',
-        'trips.physical_ticket',
-        'trips.created_at',
-        'stages.stage_data',
-        'trips.stage_id',
-        'trips.stop_id'
-    )
-    ->join('stages', 'trips.stage_id', '=', 'stages.id');
+        // Query to fetch trip data with stage data
+        $tripsQuery = Trip::select(
+            'trips.id',
+            'trips.trip_name',
+            'trips.start_date',
+            'trips.start_time',
+            'trips.end_date',
+            'trips.end_time',
+            'trips.full_ticket',
+            'trips.half_ticket',
+            'trips.student_ticket',
+            'trips.language_ticket',
+            'trips.physical_ticket',
+            'trips.created_at',
+            'stages.stage_data',
+            'trips.stage_id',
+            'trips.stop_id',
+            'trips.start_id' // Add this if you have this column
+        )
+        ->join('stages', 'trips.stage_id', '=', 'stages.id');
 
-    if ($request->filled('trip_name')) {
-        $tripsQuery->where('trip_name', 'like', '%' . $request->trip_name . '%');
-    }
-
-    if ($request->filled('start_date')) {
-        $tripsQuery->whereDate('start_date', '=', $request->start_date);
-    }
-
-    $trips = $tripsQuery->get();
-
-    // dd($trips);
-
-    // Initialize totals
-    $totalFullTicketPrice = 0;
-    $totalHalfTicketPrice = 0;
-    $totalStudentTicketPrice = 0;
-    $totalLanguageTicketPrice = 0;
-    $totalPhysicalTicketPrice = 0;
-
-    foreach ($trips as $trip) {
-        $stageData = $trip->stage_data;
-        $decodedStageData = json_decode($stageData, true);
-        $stopId = $trip->stop_id;
-
-        $stopPrice = 0;
-
-        if (isset($decodedStageData[$stopId])) {
-            $stage = $decodedStageData[$stopId];
-            $prices = $stage['prices'] ?? [];
-
-            if (!empty($prices)) {
-                $stopPrice = end($prices);
-            }
+        if ($request->filled('trip_name')) {
+            $tripsQuery->where('trip_name', 'like', '%' . $request->trip_name . '%');
         }
 
+        if ($request->filled('start_date')) {
+            $tripsQuery->whereDate('start_date', '=', $request->start_date);
+        }
 
-        // Update totals based on dynamic price
-        $totalFullTicketPrice += $trip->full_ticket * $stopPrice;
-        $totalHalfTicketPrice += $trip->half_ticket * $stopPrice * 0.5;
-        $totalStudentTicketPrice += $trip->student_ticket * $stopPrice * 0.3;
-        $totalLanguageTicketPrice += $trip->language_ticket * $stopPrice * 0.3;
-        $totalPhysicalTicketPrice += $trip->physical_ticket * $stopPrice * 0.3;
+        $trips = $tripsQuery->get();
+
+        // Initialize totals
+        $totalFullTicketPrice = 0;
+        $totalHalfTicketPrice = 0;
+        $totalStudentTicketPrice = 0;
+        $totalLanguageTicketPrice = 0;
+        $totalPhysicalTicketPrice = 0;
+
+        foreach ($trips as $trip) {
+            $stageData = $trip->stage_data;
+            $decodedStageData = json_decode($stageData, true);
+            $stopId = $trip->stop_id;
+            $startId = $trip->start_id; // Ensure start_id is available
+
+            $startPrice = 0;
+            $stopPrice = 0;
+
+            // Get the last price for stop_id
+            if (isset($decodedStageData[$stopId])) {
+                $stage = $decodedStageData[$stopId];
+                $prices = $stage['prices'] ?? [];
+                if (!empty($prices)) {
+                    $stopPrice = end($prices);
+                }
+            }
+
+            // Get the first price for start_id
+            if (isset($decodedStageData[$startId])) {
+                $stage = $decodedStageData[$startId];
+                $prices = $stage['prices'] ?? [];
+                if (!empty($prices)) {
+                    $startPrice = end($prices);
+                }
+            }
+
+            // Calculate the price difference between start and stop stages
+            $priceDifference = $stopPrice - $startPrice;
+
+            // Update totals based on dynamic price difference
+            $totalFullTicketPrice += $trip->full_ticket * $priceDifference;
+            $totalHalfTicketPrice += $trip->half_ticket * $priceDifference * 0.5;
+            $totalStudentTicketPrice += $trip->student_ticket * $priceDifference * 0.3;
+            $totalLanguageTicketPrice += $trip->language_ticket * $priceDifference * 0.3;
+            $totalPhysicalTicketPrice += $trip->physical_ticket * $priceDifference * 0.3;
+        }
+
+        // Calculate sums
+        $sumOfTotalFare = $totalFullTicketPrice + $totalHalfTicketPrice + $totalStudentTicketPrice + $totalLanguageTicketPrice + $totalPhysicalTicketPrice;
+
+        // Fetch totals from ticketCount if needed
+        $ticketCount = $dashboardService->getTicketCount();
+        $totalAmount = $ticketCount->total_amount_sum ?? 0;
+        $totalExpense = $ticketCount->total_expense_sum ?? 0;
+        $netTotal = $ticketCount->net_total_sum ?? 0;
+
+        // Prepare data for view
+        $para = [
+            'trips' => $trips,
+            'sumOfFullTicketPrice' => $totalFullTicketPrice,
+            'sumOfHalfTicketPrice' => $totalHalfTicketPrice,
+            'sumOfStudentTicketPrice' => $totalStudentTicketPrice,
+            'sumOfLanguageTicketPrice' => $totalLanguageTicketPrice,
+            'sumOfPhysicalTicketPrice' => $totalPhysicalTicketPrice,
+            'sumOfTotalFare' => $sumOfTotalFare,
+            'totalAmount' => $totalAmount,
+            'totalExpense' => $totalExpense,
+            'netTotal' => $netTotal
+        ];
+
+        $title = 'Fare Report';
+        return $this->renderView($path, $para, $title);
     }
 
-    // Calculate sums
-    $sumOfTotalFare = $totalFullTicketPrice + $totalHalfTicketPrice + $totalStudentTicketPrice + $totalLanguageTicketPrice + $totalPhysicalTicketPrice;
-
-    // Fetch totals from ticketCount if needed
-    $ticketCount = $dashboardService->getTicketCount();
-    $totalAmount = $ticketCount->total_amount_sum ?? 0;
-    $totalExpense = $ticketCount->total_expense_sum ?? 0;
-    $netTotal = $ticketCount->net_total_sum ?? 0;
-
-    // Prepare data for view
-    $para = [
-        'trips' => $trips,
-        'sumOfFullTicketPrice' => $totalFullTicketPrice,
-        'sumOfHalfTicketPrice' => $totalHalfTicketPrice,
-        'sumOfStudentTicketPrice' => $totalStudentTicketPrice,
-        'sumOfLanguageTicketPrice' => $totalLanguageTicketPrice,
-        'sumOfPhysicalTicketPrice' => $totalPhysicalTicketPrice,
-        'sumOfTotalFare' => $sumOfTotalFare,
-        'totalAmount' => $totalAmount,
-        'totalExpense' => $totalExpense,
-        'netTotal' => $netTotal
-    ];
-
-    $title = 'Fare Report';
-    return $this->renderView($path, $para, $title);
-}
 
 
 

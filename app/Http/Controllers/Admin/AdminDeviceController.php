@@ -16,6 +16,7 @@ use App\Models\Manager;
 
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
@@ -105,10 +106,15 @@ class AdminDeviceController extends Controller
 
     public function managerAssign(Request $request)
     {
-        $managerDevice =Device::find($request->entity_id);
-        $managerDevice->route_id = $request->route_id;
-        $managerDevice->save();
-        return redirect()->route('manager-device.index', $managerDevice->manager_id);
+        $device = Device::find($request->entity_id);
+        foreach ($request->route_id as $routeId) {
+            DB::table('device_route_assignments')->updateOrInsert(
+                ['device_id' => $device->id, 'route_id' => $routeId],
+                ['created_at' => now(), 'updated_at' => now()]
+            );
+        }
+        return redirect()->route('manager-device.index', $device->manager_id)
+            ->with('success', 'Routes assigned successfully.');
     }
 
     public function resetDevice(Device $device)
