@@ -1,22 +1,18 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Route extends Model
+class QrCodeModel extends Model
 {
     use HasFactory;
 
-    protected $table = 'routes';
+    protected $table = 'qr_codes';
 
     protected $fillable = [
-        'device_id',
-        'route_from',
-        'route_to',
-        'type',
-        'minimum_charge',
-        'route_number'
+       'image'
     ];
 
     public static function getTableName()

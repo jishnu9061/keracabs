@@ -11,7 +11,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Route;
 use App\Models\Device;
-
 use App\Models\Manager;
 
 use Illuminate\Http\Request;
@@ -63,6 +62,16 @@ class AdminDeviceController extends Controller
             }
         }
 
+        if ($request->hasFile('qr_code')) {
+            $image = $request->file('qr_code');
+            if ($image) {
+                $filePath = Storage::disk('public')->put('qr_code', $image);
+                $fileUrl = Storage::disk('public')->url($filePath);
+                $device->qr_code = basename($filePath);
+                $device->save();
+            }
+        }
+
         return Response::json(['success' => true]);
     }
 
@@ -77,11 +86,11 @@ class AdminDeviceController extends Controller
     public function update(Device $device, DeviceUpdateRequest $request)
     {
         $device->update([
-            'user_name' => $request->input('user_name'),
+            'user_name' => $request->input('name'),
             'password' => bcrypt($request->input('password')),
             'header_one' => $request->input('header_one'),
             'header_two' => $request->input('header_two'),
-            'footer' => $request->input('footer')
+            'footer' => $request->input('footer'),
         ]);
 
         if ($request->hasFile('logo')) {
@@ -90,6 +99,16 @@ class AdminDeviceController extends Controller
                 $filePath = Storage::disk('public')->put('device', $image);
                 $fileUrl = Storage::disk('public')->url($filePath);
                 $device->logo = basename($filePath);
+                $device->save();
+            }
+        }
+
+        if ($request->hasFile('qr_code')) {
+            $image = $request->file('qr_code');
+            if ($image) {
+                $filePath = Storage::disk('public')->put('qr_code', $image);
+                $fileUrl = Storage::disk('public')->url($filePath);
+                $device->qr_code = basename($filePath);
                 $device->save();
             }
         }
@@ -120,9 +139,10 @@ class AdminDeviceController extends Controller
 
     public function resetDevice(Device $device)
     {
-        $device->route_id = null;
+        $device->is_logged_in = false;
         $device->save();
-        return redirect()->back();
+        ToastrHelper::success('Device reset successfully');
+        return Response::json(['success' => true]);
     }
 
     public function assignList(Request $request, Device $device)
@@ -132,7 +152,7 @@ class AdminDeviceController extends Controller
         $routes = DB::table('device_route_assignments as da')
             ->join('routes as r', 'da.route_id', '=', 'r.id')
             ->where('da.device_id', $device->id)
-            ->select('r.id as route_id', 'r.route_from', 'r.route_to', 'r.created_at', 'r.updated_at','da.id')
+            ->select('r.id as route_id', 'r.route_from', 'r.route_to', 'r.created_at', 'r.updated_at', 'da.id')
             ->get();
         $para = ['routes' => $routes];
         $title = 'Edit Manager';

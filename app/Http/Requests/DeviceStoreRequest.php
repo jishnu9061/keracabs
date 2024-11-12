@@ -28,6 +28,7 @@ class DeviceStoreRequest extends FormRequest
             'header_one' => 'nullable|string|max:255',
             'header_two' => 'nullable|string|max:255',
             'footer' => 'nullable|string|max:255',
+            'gpay_id' => 'nullable|string|max:255'
         ];
     }
 }

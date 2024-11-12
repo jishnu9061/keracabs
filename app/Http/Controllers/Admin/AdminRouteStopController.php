@@ -13,27 +13,75 @@ use Illuminate\Support\Facades\Response;
 
 class AdminRouteStopController extends Controller
 {
+    // public function index(Route $route)
+    // {
+    //     $path = $this->getView('admin.stop.index');
+    //     $stagesData = Stage::where('route_id', $route->id)->first();
+
+    //     $stages = [];
+    //     if ($stagesData && !empty($stagesData->stage_data)) {
+    //         $decodedData = json_decode($stagesData->stage_data, true);
+    //         if (json_last_error() === JSON_ERROR_NONE && is_array($decodedData)) {
+    //             foreach ($decodedData as $key => $value) {
+    //                 if (is_array($value) && isset($value['stage_name']) && isset($value['prices'])) {
+    //                     $stages[$key] = $value;
+    //                 }
+    //             }
+    //         }
+    //     }
+
+    //     $para = ['route' => $route, 'existingStages' => $stages];
+    //     $title = 'Route Stops';
+    //     return $this->renderView($path, $para, $title);
+    // }
+    // public function index(Route $route)
+    // {
+    //     $path = $this->getView('admin.stop.index');
+    //     $stagesData = Stage::where('route_id', $route->id)->first();
+
+    //     $stages = [];
+    //     if ($stagesData && !empty($stagesData->stage_data)) {
+    //         $decodedData = json_decode($stagesData->stage_data, true);
+    //         if (json_last_error() === JSON_ERROR_NONE && is_array($decodedData)) {
+    //             foreach ($decodedData as $key => $value) {
+    //                 if (is_array($value) && isset($value['prices'])) {
+    //                     $stages[$key] = [
+    //                         'stage_name' => $value['stage_name'] ?? null,
+    //                         'prices' => $value['prices']
+    //                     ];
+    //                 }
+    //             }
+    //         }
+    //     }
+
+    //     $para = ['route' => $route, 'existingStages' => $stages];
+    //     $title = 'Route Stops';
+    //     return $this->renderView($path, $para, $title);
+    // }
     public function index(Route $route)
     {
         $path = $this->getView('admin.stop.index');
         $stagesData = Stage::where('route_id', $route->id)->first();
-
-        $stages = [];
         if ($stagesData && !empty($stagesData->stage_data)) {
             $decodedData = json_decode($stagesData->stage_data, true);
             if (json_last_error() === JSON_ERROR_NONE && is_array($decodedData)) {
+                $stages = collect(); // Initialize as a collection
                 foreach ($decodedData as $key => $value) {
-                    if (is_array($value) && isset($value['stage_name']) && isset($value['prices'])) {
-                        $stages[$key] = $value;
+                    if (is_array($value) && isset($value['prices'])) {
+                        $stages->push([
+                            'stage_name' => $value['stage_name'] ?? null,
+                            'prices' => $value['prices'],
+                        ]);
                     }
                 }
             }
         }
-
         $para = ['route' => $route, 'existingStages' => $stages];
         $title = 'Route Stops';
         return $this->renderView($path, $para, $title);
     }
+
+
 
     public function create(Route $route)
     {

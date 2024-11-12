@@ -1,7 +1,6 @@
 @extends('layouts.app')
 @section('title', 'Dashboard | KL Mart')
 @section('content')
-    <!-- start page title -->
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
@@ -14,7 +13,6 @@
             <div class="card">
                 <div class="card-body">
                     <div>
-
                         <form action="{{ route('trip.stage') }}" method="GET" id="stageForm">
                             <div>
                                 <div class="row align-items-center">
@@ -54,7 +52,7 @@
                                             <button type="button" class="btn btn-primary waves-effect waves-light w-100 me-2"
                                                 id="stageFormReset">Reset
                                             </button>
-                                            {{-- <a href="{{ route('trip.print') }}" class="btn btn-primary waves-effect waves-light w-100">Print</a> --}}
+                                            <a href="{{ route('trip.stage-print') }}" class="btn btn-primary waves-effect waves-light w-100">Print</a>
                                         </div>
                                     </div>
                                 </div>
@@ -75,6 +73,7 @@
                             <thead>
                                 <tr>
                                     <th>Sl.No</th>
+                                    <th>Tripname</th>
                                     <th>Date</th>
                                     <th>Stage</th>
                                     <th>No.of Tickets</th>
@@ -85,10 +84,11 @@
                                 @foreach ($trips as $trip)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $trip->created_at }}</td>
+                                    <td>{{ $trip->trip_name }}</td>
+                                    <td>{{ $trip->date }}</td>
                                     <td>{{ $trip->route_from }}-{{ $trip->route_to }}</td>
                                     <td>{{ $trip->total_ticket }}</td>
-                                    <td>{{ $trip->total_amount }}</td>
+                                    <td>{{ $trip->grand_total_ticket_price }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>

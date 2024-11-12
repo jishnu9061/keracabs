@@ -13,7 +13,7 @@ class DeviceController extends Controller
 {
     public function index()
     {
-        $devices = Device::select('devices.id', 'devices.manager_id', 'devices.route_id', 'devices.user_name', 'devices.password', 'devices.logo', 'devices.header_one', 'devices.header_two', 'devices.footer', 'managers.name')
+        $devices = Device::select('devices.id', 'devices.manager_id', 'devices.route_id', 'devices.user_name', 'devices.password', 'devices.logo', 'devices.header_one', 'devices.header_two', 'devices.footer', 'managers.name','managers.id as manager_id')
             ->join('managers', 'devices.manager_id', '=', 'managers.id')
             ->get();
 

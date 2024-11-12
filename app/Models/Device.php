@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Device extends Authenticatable
 {
-    use HasApiTokens, Notifiable;
+    use HasApiTokens, Notifiable, HasFactory;
 
     protected $table = 'devices';
 
@@ -20,7 +20,21 @@ class Device extends Authenticatable
         'logo',
         'header_one',
         'header_two',
-        'footer'
+        'footer',
+        'qr_code',
+        'gpay_id'
+    ];
+
+    protected $casts = [
+        'manager_id' => 'integer',
+        'user_name' => 'string',
+        'password' => 'string',
+        'logo' => 'string',
+        'header_one' => 'string',
+        'header_two' => 'string',
+        'footer' => 'string',
+        'qr_code' => 'integer',
+        'gpay_id' => 'integer',
     ];
 
     public static function getTableName()

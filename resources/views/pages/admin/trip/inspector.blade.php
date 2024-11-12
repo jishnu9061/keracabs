@@ -20,7 +20,7 @@
             <div class="card-body">
                 <div>
 
-                    <form action="{{ route('trip.fare') }}" method="GET" id="inspectorForm">
+                    <form action="{{ route('trip.inspector') }}" method="GET" id="inspectorForm">
                         <div>
                             <div class="row align-items-center">
                                 <div class="col-lg-3">
@@ -59,7 +59,7 @@
                                         <button type="button" class="btn btn-primary waves-effect waves-light w-100 me-2"
                                             id="inspectorFormReset">Reset
                                         </button>
-                                        {{-- <a href="{{ route('trip.print') }}" class="btn btn-primary waves-effect waves-light w-100">Print</a> --}}
+                                        <a href="{{ route('trip.inspector-print') }}" class="btn btn-primary waves-effect waves-light w-100">Print</a>
                                     </div>
                                 </div>
                             </div>
@@ -104,7 +104,7 @@
                             @foreach ($trips as $trip)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $trip->created_at }}</td>
+                                <td>{{ $trip->date }}</td>
                                 <td>{{ $trip->trip_name }}</td>
                                 <td>{{ $trip->route_from }}-{{ $trip->route_to }}</td>
                                 <td>{{ $trip->total_ticket }}</td>

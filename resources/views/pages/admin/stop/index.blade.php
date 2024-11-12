@@ -93,18 +93,40 @@
 <script>
     $(document).ready(function() {
         let stageCount = {{ count($existingStages) }}; // Initialize stage count based on existing stages
+        let existingStages = @json($existingStages); // Get existing stages data
+
+        // Function to create price input columns based on the last stage's prices
+        function createPriceInputs(lastPrices, currentStageCount) {
+            let priceColumns = '';
+
+            // For each stage, create the appropriate number of price inputs
+            for (let i = 0; i < currentStageCount; i++) {
+                // The first price input is always 0; subsequent prices inherit from the last stage
+                let priceValue = (i === 0) ? 0 : (lastPrices[i - 1] || 0);
+                priceColumns += `
+                    <td>
+                        <input type="number" name="stages[${stageCount}][prices][]" class="form-control" value="${priceValue}" />
+                    </td>
+                `;
+            }
+
+            return priceColumns;
+        }
 
         // Add stage functionality
         $('#add-stage-btn').on('click', function() {
             stageCount++; // Increment the stage count
-            let priceColumns = Array.from({length: stageCount}, (_, i) => `
-                <td><input type="number" name="stages[${stageCount}][prices][]" class="form-control" value="0" /></td>
-            `).join('');
 
+            // Get the last stage's prices
+            let lastPrices = existingStages.length > 0 ? existingStages[existingStages.length - 1].prices : [];
+
+            // Generate new row with price columns
             let newRow = `
                 <tr data-id="${stageCount}">
-                    <td><input type="text" name="stages[${stageCount}][stage_name]" class="form-control" placeholder="Stage Name" /></td>
-                    ${priceColumns}
+                    <td>
+                        <input type="text" name="stages[${stageCount}][stage_name]" class="form-control" placeholder="Stage Name" />
+                    </td>
+                    ${createPriceInputs(lastPrices, stageCount)} <!-- Call function to create price inputs -->
                     <td>
                         <button type="button" class="btn btn-danger btn-sm remove-row">
                             <i class="bx bx-x"></i> Remove
@@ -114,11 +136,23 @@
             `;
 
             $('#stages-table-body').append(newRow);
+            existingStages.push({
+                prices: [0, ...lastPrices]
+            });
         });
 
         // Remove row functionality
         $(document).on('click', '.remove-row', function() {
             $(this).closest('tr').remove();
+            stageCount = $('#stages-table-body tr').length;
         });
     });
 </script>
+
+
+
+
+
+
+
+

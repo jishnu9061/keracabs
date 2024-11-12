@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Admin\DeviceController;
+use App\Http\Controllers\Admin\QrCodeController;
 use App\Http\Controllers\Admin\AdminFareController;
 use App\Http\Controllers\Admin\AdminTripController;
 use App\Http\Controllers\Admin\AdminRouteController;
@@ -12,7 +13,7 @@ use App\Http\Controllers\Admin\AdminDeviceController;
 use App\Http\Controllers\Admin\AdminManagerController;
 use App\Http\Controllers\Admin\AdminStudentController;
 use App\Http\Controllers\Admin\AdminRouteStopController;
-
+use App\Http\Controllers\Admin\UploadTicketController;
 
 /*
 |--------------------------------------------------------------------------
@@ -112,5 +113,21 @@ Route::group(['middleware' => ['auth:admin']], function () {
         Route::get('/stage', [AdminTripController::class, 'stageReport'])->name('stage');
         Route::get('/inspector', [AdminTripController::class, 'inspectorReport'])->name('inspector');
         // Route::get('/print', [AdminTripController::class, 'printScreen'])->name('print');
+        Route::get('/print-trip', [AdminTripController::class, 'printTrip'])->name('trip-print');
+        Route::get('/print-collection', [AdminTripController::class, 'printCollection'])->name('collection-print');
+        Route::get('/print-fare', [AdminTripController::class, 'printFare'])->name('fare-print');
+        Route::get('/print-stage', [AdminTripController::class, 'printStage'])->name('stage-print');
+        Route::get('/print-inspector', [AdminTripController::class, 'printInspector'])->name('inspector-print');
     });
+
+    Route::group(['prefix' => 'qr', 'namespace' => 'Qr', 'as' => 'qr.'], function () {
+        Route::get('/', [QrCodeController::class, 'index'])->name('index');
+        Route::put('update/{qrCodeModel}', [QrCodeController::class, 'updateQrCode'])->name('update');
+    });
+
+    Route::group(['prefix' => 'upload', 'namespace' => 'Upload', 'as' => 'upload.'], function () {
+        Route::get('/', [UploadTicketController::class, 'index'])->name('index');
+        Route::put('update', [UploadTicketController::class, 'uploadTicketPrice'])->name('store');
+    });
+
 });

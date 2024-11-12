@@ -1,5 +1,8 @@
 @extends('layouts.app')
 @section('title', 'Dashboard | Greenveel')
+@push('styles')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+@endpush
 @section('content')
     <div class="row">
         <div class="col-12">
@@ -32,8 +35,8 @@
                                 @foreach ($devices as $device)
                                     <tr>
                                         <td>{{ $loop->iteration }}.</td>
-                                        <td><a href="javascript:;">{{ $device->name }}</a></td>
-                                        <td><a href="javascript:;">{{ $device->user_name }}</a></td>
+                                        <td><a href="{{ route('manager-device.index',$device->manager_id) }}">{{ $device->name }}</a></td>
+                                        <td><a href="{{ route('manager-device.list',$device->id) }}">{{ $device->user_name }}</a></td>
                                         <td>{{ $device->password }}</td>
                                         <td>
                                             @if ($device->logo)
@@ -99,7 +102,7 @@
                         @csrf
                         <div class="mb-3">
                             <label for="route-select" class="form-label font-size-16 text-muted">Select Route</label>
-                            <select class="form-control" name="route_id[]" id="route-select" multiple>
+                            <select class="form-control" data-trigger="" name="route_id[]" id="choices-multiple-default" placeholder="This is a placeholder" multiple="">
                                 @foreach ($routes as $route)
                                     <option value="{{ $route->id }}">{{ $route->route_from }} - {{ $route->route_to }}
                                     </option>
@@ -118,14 +121,11 @@
     </div>
 
 @endsection
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-    integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRsN/hYZyoD1t3R2TgC8X5dB2T2syuYrO6+rLdU5e" crossorigin="anonymous">
-</script>
-<script src="{{ asset('admin/libs/jquery/jquery.min.js') }}"></script>
-<!-- SweetAlert2 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     $(document).ready(function() {
+        $.noConflict();
         $(document).on('click', '.route-assign-btn', function() {
         var userId = $(this).data('user-id');
         $('#entityId').val(userId); // Set the hidden input value
@@ -200,4 +200,14 @@
             }
         });
     });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('#route-select').select2({
+        placeholder: "Select a route",
+        allowClear: true,
+        width: '100%'
+    });
+});
 </script>

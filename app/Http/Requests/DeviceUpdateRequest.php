@@ -22,7 +22,13 @@ class DeviceUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string|max:255',
+            'password' => 'required|string|max:255',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'header_one' => 'nullable|string|max:255',
+            'header_two' => 'nullable|string|max:255',
+            'footer' => 'nullable|string|max:255',
+            'gpay_id' => 'nullable|string|max:255'
         ];
     }
 }

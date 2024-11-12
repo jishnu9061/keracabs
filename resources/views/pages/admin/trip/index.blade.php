@@ -52,7 +52,7 @@
                                         <button type="button" class="btn btn-primary waves-effect waves-light w-100 me-2"
                                             id="tripFormReset">Reset
                                         </button>
-                                        {{-- <a href="{{ route('trip.print') }}" class="btn btn-primary waves-effect waves-light w-100">Print</a> --}}
+                                        <a href="{{ route('trip.trip-print') }}" class="btn btn-primary waves-effect waves-light w-100">Print</a>
                                     </div>
                                 </div>
                             </div>

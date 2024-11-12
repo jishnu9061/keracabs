@@ -83,7 +83,7 @@
                         @csrf
                         <div class="mb-3">
                             <label for="route-select" class="form-label font-size-16 text-muted">Select Route</label>
-                            <select class="form-control" name="route_id" id="route-select">
+                            <select class="form-control" data-trigger="" name="route_id[]" id="choices-multiple-default" placeholder="This is a placeholder" multiple="">
                                 @foreach($routes as $route)
                                     <option value="{{ $route->id }}">{{ $route->route_from }} - {{ $route->route_to }}</option>
                                 @endforeach
@@ -138,6 +138,15 @@
                                     <input class="form-control" type="file" name="logo"
                                         value="{{ old('logo') }}" id="logo">
                                     <div class="invalid-feedback" id="error-logo"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 col-md-12">
+                                <div class="mb-4">
+                                    <label for="qr_code" class="form-label">Qrcode</label>
+                                    <input class="form-control" type="file" name="qr_code"
+                                        value="{{ old('qr_code') }}" id="qr_code">
+                                    <div class="invalid-feedback" id="error-qr_code"></div>
                                 </div>
                             </div>
 
@@ -262,6 +271,7 @@
                 $('#error-name').text(errors.name);
                 $('#error-password').text(errors.password);
                 $('#error-logo').text(errors.logo);
+                $('#qr-code').text(errors.logo);
             }
         });
     });

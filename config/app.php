@@ -195,6 +195,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class
 
     ],
 
@@ -211,6 +212,8 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         'AdminConstants' => App\Http\Constants\AdminConstants::class,
+        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
     ])->toArray(),
 
 ];

@@ -57,7 +57,7 @@
                                             <button type="button" class="btn btn-primary waves-effect waves-light w-100 me-2"
                                                 id="collectionFormReset">Reset
                                             </button>
-                                            {{-- <a href="{{ route('trip.print') }}" class="btn btn-primary waves-effect waves-light w-100">Print</a> --}}
+                                            <a href="{{ route('trip.collection-print') }}" class="btn btn-primary waves-effect waves-light w-100">Print</a>
                                         </div>
                                     </div>
                                 </div>
@@ -98,11 +98,12 @@
                                     <th>Net Amount</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @foreach ($trips as $trip)
+                            @if(count($trips) > 0)
+                                <tbody>
+                                    @foreach ($trips as $trip)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $trip->created_at }}</td>
+                                        <td>{{ $trip->date }}</td>
                                         <td>{{ $trip->trip_name }}</td>
                                         <td>{{ $trip->full_ticket }}</td>
                                         <td>{{ $trip->half_ticket }}</td>
@@ -110,30 +111,29 @@
                                         <td>{{ $trip->language_ticket }}</td>
                                         <td>{{ $trip->physical_ticket }}</td>
                                         <td>{{ $trip->total_ticket }}</td>
-                                        <td>{{ 	$trip->total_amount }}</td>
-                                        <td>{{ 	$trip->total_expense }}</td>
-                                        <td>{{ 	$trip->net_total }}</td>
+                                        <td>{{ $trip->grand_total_ticket_price }}</td>
+                                        <td>{{ $totalExpense[$trip->trip_id] ?? 0 }}</td>
+                                        <td>{{ $netTotalPerTrip[$trip->trip_id] ?? 0 }}</td>
                                     </tr>
-                                @endforeach
-                                <tr>
-                                    <td colspan="3">
-                                        <h5>Total Amount</h5>
-                                    </td>
-                                    <td>{{ $sumOfFullTicket }}</td>
-                                    <td>{{ $sumOfHalfTicket }}</td>
-                                    <td>{{ $sumOfStudentTicket }}</td>
-                                    <td>{{ $sumOfLanguageTicket }}</td>
-                                    <td>{{ $sumOfPhysicalTicket }}</td>
-                                    <td>{{ $sumOfTotalTicket }}</td>
-                                    <td>{{ $totalAmount }}</td>
-                                    <td>{{ $totalExpense }}</td>
-                                    <td>{{ $netTotal }}</td>
-                                    <td style="display: none;"></td>
-                                    <td style="display: none;"></td>
-                                    <td style="display: none;"></td>
-                                </tr>
-
-                            </tbody>
+                                    @endforeach
+                                    <tr>
+                                        <td colspan="3">
+                                            <h5>Total Amount</h5>
+                                        </td>
+                                        <td>{{ $sumOfFullTicket }}</td>
+                                        <td>{{ $sumOfHalfTicket }}</td>
+                                        <td>{{ $sumOfStudentTicket }}</td>
+                                        <td>{{ $sumOfLanguageTicket }}</td>
+                                        <td>{{ $sumOfPhysicalTicket }}</td>
+                                        <td>{{ $sumOfTotalTicket }}</td>
+                                        <td>{{ $totalAmount }}</td>
+                                        <td>{{ array_sum($totalExpense) }}</td>
+                                        <td>{{ $totalAmount }}</td>
+                                    </tr>
+                                </tbody>
+                            @else
+                            No Details
+                            @endif
                         </table>
                     </div>
                 </div>

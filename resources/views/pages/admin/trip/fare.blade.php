@@ -54,7 +54,7 @@
                                             <button type="button" class="btn btn-primary waves-effect waves-light w-100 me-2"
                                                 id="fareFormReset">Reset
                                             </button>
-                                            {{-- <a href="{{ route('trip.print') }}" class="btn btn-primary waves-effect waves-light w-100">Print</a> --}}
+                                            <a href="{{ route('trip.fare-print') }}" class="btn btn-primary waves-effect waves-light w-100">Print</a>
                                         </div>
                                     </div>
                                 </div>
@@ -99,7 +99,7 @@
                                 @foreach ($trips as $trip)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $trip->created_at }}</td>
+                                    <td>{{ $trip->date }}</td>
                                     <td>{{ $trip->trip_name }}</td>
                                     <td>{{ $trip->full_ticket }}</td>
                                     <td>{{ $trip->half_ticket }}</td>

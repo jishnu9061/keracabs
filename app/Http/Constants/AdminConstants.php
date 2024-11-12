@@ -12,4 +12,14 @@ class AdminConstants
     const STUDENT_TICKET_PRICE = 20;
     const LAGGUAGE_TICKET_PRICE = 25;
     const PHYSICAL_TICKET_PRICE = 30;
+
+    const STATUS_BOOKED = 1;
+    const STATUS_STARTED = 2;
+    const STATUS_ENDED = 3;
+
+    const ROUTE_STATUS_UP = 1;
+    const ROUTE_STATUS_DOWN = 2;
+
+    const STATUS_ACTIVE = 1;
+    const STATUS_INACTIVE = 2;
 }

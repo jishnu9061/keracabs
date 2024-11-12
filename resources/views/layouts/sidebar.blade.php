@@ -53,6 +53,18 @@
                         <li><a href="{{ route('trip.inspector') }}" data-key="t-maintenance">Inspector Report</a></li>
                     </ul>
                 </li>
+                {{-- <li>
+                    <a href="{{ route('qr.index') }}">
+                        <i class="fa fa-qrcode"></i>
+                        <span data-key="t-dashboard">Qr code</span>
+                    </a>
+                </li> --}}
+                <li>
+                    <a href="{{ route('upload.index') }}">
+                        <i class="fa fa-upload"></i>
+                        <span data-key="t-dashboard">Upload ticket price</span>
+                    </a>
+                </li>
 
             </ul>
         </div>
